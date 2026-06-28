@@ -1,0 +1,21 @@
+.ASTRO ={
+  En Astro, un archivo .astro = HTML + CSS + JS juntos en un solo archivo. 
+  No es un framework reactivo como React: sigue siendo HTML estático mayormente,
+  con la ventaja de que podés organizar todo en componentes reutilizables.
+ }
+
+La ESTRUCUTRA de un .ASTRO tiene tres zonas:
+
+---
+// 1. FRONTMATTER (se ejecuta en build time, no en browser)
+// Acá va: imports, fetch de datos, lógica de servidor
+const titulo = "Cripto La Plata";
+---
+
+<!-- 2. TEMPLATE (HTML normal, con expresiones {}) -->
+<h1>{titulo}</h1>
+
+<style>
+  /* 3. CSS (scoped por defecto al componente) */
+  h1 { color: red; }
+</style>

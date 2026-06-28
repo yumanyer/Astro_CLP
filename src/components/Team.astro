@@ -1,0 +1,91 @@
+---
+// src/components/Team.astro
+import TeamCard from './TeamCard.astro';
+
+const team = [
+  {
+    name: 'Nahuel Suárez',
+    role: 'Project Manager (PM)',
+    description: 'Liderando la visión estratégica y coordinación general de la comunidad.',
+    image: 'img/team/lego_manu.png',
+    socials: [
+      { platform: 'Twitter', url: '#' },
+      { platform: 'LinkedIn', url: '#' }
+    ]
+  },
+  {
+    name: 'Rous Espindola',
+    role: 'Head of Comms (HoC)',
+    description: 'Voz de CLP, gestionando la comunicación y el alcance institucional.',
+    image: 'img/team/lego_manu.png',
+    socials: [
+      { platform: 'Twitter', url: '#' },
+      { platform: 'Instagram', url: '#' }
+    ]
+  },
+  {
+    name: 'Andres Daspett',
+    role: 'Treasury Manager (TM)',
+    description: 'Responsable de la gestión financiera y transparencia de recursos.',
+    image: 'img/team/lego_manu.png',
+    socials: [
+      { platform: 'Twitter', url: '#' },
+      { platform: 'LinkedIn', url: '#' }
+    ]
+  },
+  {
+    name: 'Manuel Pisoni',
+    role: 'Dev Rel (DR)',
+    description: 'Conectando desarrolladores y facilitando la adopción tecnológica.',
+    image: 'img/team/lego_manu.png',
+    socials: [
+      { platform: 'Twitter', url: '#' },
+      { platform: 'GitHub', url: '#' }
+    ]
+  },
+  {
+    name: 'Leandro Acuña',
+    role: 'Operaciones & Comms (Ops)',
+    description: 'Optimización de procesos internos y soporte en comunicaciones.',
+    image: 'img/team/lego_manu.png',
+    socials: [
+      { platform: 'Twitter', url: '#' },
+      { platform: 'LinkedIn', url: '#' }
+    ]
+  },
+  {
+    name: 'Tomas Jaime',
+    role: 'Operaciones & Comms (Ops)',
+    description: 'Gestión operativa y ejecución de estrategias de comunicación.',
+    image: 'img/team/lego_manu.png',
+    socials: [
+      { platform: 'Twitter', url: '#' },
+      { platform: 'LinkedIn', url: '#' }
+    ]
+  }
+];
+---
+
+<section class="equipo" id="equipo">
+  <div class="section-head reveal">
+    <h2>Core Team</h2>
+    <p>Las personas detrás de la comunidad.</p>
+  </div>
+
+  <div class="team-grid reveal">
+    {team.map((member) => (
+      <TeamCard {...member} />
+    ))}
+  </div>
+</section>
+
+<style>
+/* ============ CARD DE EQUIPO ============ */
+.equipo { padding: 60px 32px 100px; max-width: 1280px; margin: 0 auto; }
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  padding: 20px 0;
+}
+</style>

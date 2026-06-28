@@ -1,0 +1,111 @@
+---
+// src/components/Partners.astro
+const partners = [
+  { name: 'ALEPH', img: 'ALEPH.png' },
+  { name: 'Arbitrum', img: 'Arbitrum.png' },
+  { name: 'Avalanche', img: 'avalanche_Red.png' },
+  { name: 'Binance', img: 'Binance_logo.png' },
+  { name: 'Bitget', img: 'bitget_wallet.png' },
+  { name: 'BitPoint', img: 'BitPoint.png' },
+  { name: 'Devconnect', img: 'Devconnect.png' },
+  { name: 'Indo', img: 'indo.png' },
+  { name: 'KAST', img: 'KAST.png' },
+  { name: 'Labitconf', img: 'Labitconf.png' },
+  { name: 'MetaPool', img: 'Meta-Pool-Wordmark-Lime.png' },
+  { name: 'OKX', img: 'okx.png' },
+  { name: 'Team1', img: 'Team1_Text_Main.png' },
+  { name: 'Uniswap', img: 'Uniswap_icon_pink.png' },
+];
+---
+
+<section class="apoyan" id="apoyan">
+  <div class="apoyan-block">
+    <div class="section-head reveal">
+      <h2>Nos Apoyan</h2>
+      <p class="section-sub">Sponsors actuales</p>
+    </div>
+
+    <div class="marquee reveal">
+      <div class="marquee-track">
+        {partners.map((partner) => (
+          <span class="logo-pill">
+            <img 
+              src={`img/partners/${partner.img}`} 
+              alt={partner.name} 
+              style="width: 100px;" 
+            />
+          </span>
+        ))}
+        {/* Duplicamos la lista para que el efecto de scroll infinito sea fluido */}
+        {partners.map((partner) => (
+          <span class="logo-pill">
+            <img 
+              src={`img/partners/${partner.img}`} 
+              alt={partner.name} 
+              style="width: 100px;" 
+            />
+          </span>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.apoyan { padding: 60px 0 100px; }
+
+.apoyan-block { margin-bottom: 50px; }
+.apoyan-block:last-child { margin-bottom: 0; }
+
+.apoyan-block .section-head {
+  text-align: left;
+  margin-bottom: 28px;
+}
+
+.apoyan-block .section-head h2 {
+  margin-bottom: 6px;
+}
+
+.section-sub {
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.marquee {
+  overflow: hidden;
+  margin-bottom: 0;
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+.marquee-track {
+  display: flex;
+  gap: 24px;
+  width: max-content;
+  align-items: center;
+  animation: scrollLeft 30s linear infinite;
+}
+ .marquee-track {
+  animation: scrollRight 35s linear infinite;
+}
+@keyframes scrollLeft {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes scrollRight {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+.logo-pill {
+  padding: 16px 32px;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  white-space: nowrap;
+  transition: color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+
+</style>

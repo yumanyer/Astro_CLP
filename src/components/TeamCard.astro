@@ -1,0 +1,271 @@
+---
+// src/components/TeamCard.astro
+
+// Definimos qué forma tiene una red social
+interface Social {
+  platform: string;
+  url: string;
+}
+
+// Definimos las propiedades que recibe el componente
+interface Props {
+  name: string;
+  role: string;
+  description: string;
+  image: string;
+  socials: Social[]; // Decimos que es una lista de objetos tipo Social
+}
+
+const { name, role, description, image, socials } = Astro.props;
+---
+
+<div class="team-card" tabindex="0">
+  <div class="team-card-inner">
+    <div class="team-photo">
+      <img 
+        style=" 
+        height: auto;
+        display: block;
+        max-width: fit-content;
+        " 
+    src={image} alt={name} />
+    </div>
+    <div class="team-info">
+      <h3>{name}</h3>
+      <span class="team-role">{role}</span>
+      <div class="team-detail">
+        <p>{description}</p>
+        <div class="team-socials">
+          {socials.map((social) => (
+            <a href={social.url} aria-label={social.platform}>
+              {social.platform === 'Twitter' ? 'X' : 
+               social.platform === 'LinkedIn' ? 'in' : 
+               social.platform === 'Instagram' ? 'ig' : 'gh'}
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* ============ EQUIPO ============ */
+.team-card {
+  position: relative;
+  height: 380px;
+  border-radius: 24px;
+  overflow: hidden;
+  background: rgba(8, 8, 8, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  cursor: pointer;
+}
+
+.team-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 30px;
+  z-index: 2;
+}
+
+/* Glow Effects */
+.team-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(4, 255, 183, 0.15), transparent 70%);
+  opacity: 0.5;
+  transition: opacity 0.5s ease;
+}
+
+.team-card::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 24px;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(4, 255, 183, 0.3), rgba(213, 63, 233, 0.3));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.5;
+  transition: opacity 0.5s ease;
+}
+
+/* Hover States */
+.team-card:hover,
+.team-card.active {
+  transform: translateY(-10px) scale(1.02);
+  border-color: rgba(4, 255, 183, 0.4);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 
+              0 0 20px rgba(4, 255, 183, 0.1),
+              0 0 40px rgba(213, 63, 233, 0.05);
+}
+
+.team-card:hover::before,
+.team-card.active::before {
+  opacity: 1;
+}
+
+.team-card:hover::after,
+.team-card.active::after {
+  opacity: 1;
+  background: linear-gradient(135deg, #04FFB7, #D53FE9);
+}
+
+/* Photo / Initial State */
+.team-photo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -60%);
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: var(--gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 2.5rem;
+  color: #080808;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  z-index: 1;
+}
+
+.team-card:hover .team-photo,
+.team-card.active .team-photo {
+    opacity: 0.8;
+}
+
+/* Info Container */
+.team-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+
+    background: linear-gradient(
+        to top,
+        rgba(0,0,0,.95),
+        rgba(0,0,0,.85)
+    );
+
+    min-height: 150px;
+    padding: 20px;
+    z-index: 5;
+}
+
+
+.team-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 4px;
+  color: #fff;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+.team-role {
+  font-size: 0.9rem;
+  color: #04FFB7;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 0;
+  transition: margin 0.5s ease;
+}
+
+.team-card:hover .team-role,
+.team-card.active .team-role {
+  margin-bottom: 12px;
+}
+
+/* Detail / Expandable Part */
+.team-detail {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+
+    transition:
+        opacity .4s ease,
+        max-height .4s ease;
+}
+
+.team-card:hover .team-detail,
+.team-card.active .team-detail {
+    opacity: 1;
+    max-height: 200px;
+}
+
+.team-detail p {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+/* Socials Stagger Animation */
+.team-socials {
+  display: flex;
+  gap: 15px;
+}
+
+.team-socials a {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  color: #fff;
+  transition: all 0.3s ease;
+  transform: translateY(20px);
+  opacity: 0;
+}
+
+.team-card:hover .team-socials a,
+.team-card.active .team-socials a {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.team-card:hover .team-socials a:nth-child(1),
+.team-card.active .team-socials a:nth-child(1) { transition-delay: 0.1s; }
+.team-card:hover .team-socials a:nth-child(2),
+.team-card.active .team-socials a:nth-child(2) { transition-delay: 0.2s; }
+
+.team-socials a:hover {
+  background: rgba(4, 255, 183, 0.1);
+  border-color: #04FFB7;
+  color: #04FFB7;
+  transform: translateY(-3px) !important;
+}
+
+@media (max-width: 960px) {
+  .team-grid { 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 24px;
+  }
+  .team-card { height: 360px; }
+}
+
+@media (max-width: 640px) {
+  .team-grid { 
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  .team-card { height: 340px; }
+  .team-photo { width: 120px; height: 120px; font-size: 2rem; }
+}
+</style>

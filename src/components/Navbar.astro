@@ -1,0 +1,135 @@
+---
+---
+
+<!-- NAVBAR -->
+<header class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="#" class="logo">
+      <img
+        src="/img/icon/CLP-premium.webp"
+        width="64"
+        height="64"
+        alt="CLP"
+        loading="eager"
+        decoding="async"
+      >
+    </a>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="#">Inicio</a>
+      <a href="#">Historia</a>
+      <a href="#">Eventos</a>
+      <a href="#">Equipo</a>
+      <a href="#">Contacto</a>
+    </nav>
+
+    <a href="#" class="btn btn-primary nav-cta">
+      Unirme a la Comunidad
+    </a>
+
+    <button
+      class="burger"
+      id="burger"
+      aria-label="Abrir menú"
+      aria-expanded="false"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</header>
+
+<script>
+  const burger = document.getElementById('burger');
+  const navLinks = document.getElementById('navLinks');
+
+  if (burger && navLinks) {
+    burger.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+
+      burger.setAttribute('aria-expanded', String(isOpen));
+      burger.classList.toggle('active');
+    });
+
+    navLinks.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        burger.setAttribute('aria-expanded', 'false');
+        burger.classList.remove('active');
+      });
+    });
+  }
+</script>
+
+<style>
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: rgba(8,8,8,0.6);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--glass-border);
+}
+.nav-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 32px;
+}
+.logo {
+  font-family: var(--font-title);
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.logo img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+}
+.nav-links {
+  display: flex;
+  gap: 32px;
+}
+.nav-links a {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  position: relative;
+  transition: color 0.2s ease;
+}
+.nav-links a:hover { color: var(--white); }
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: -6px;
+  width: 0; height: 2px;
+  background: var(--gradient);
+  transition: width 0.25s ease;
+}
+.nav-links a:hover::after { width: 100%; }
+
+.nav-cta { padding: 10px 22px; font-size: 0.85rem; }
+
+.burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+.burger span {
+  width: 22px; height: 2px;
+  background: var(--white);
+  transition: 0.3s ease;
+}
+
+</style>
