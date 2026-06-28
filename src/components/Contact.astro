@@ -1,0 +1,223 @@
+---
+// src/components/Contact.astro
+---
+
+<!-- CONTACTO -->
+<section class="contacto" id="contacto">
+  <div class="contacto-grid reveal">
+    <div class="contacto-info">
+      <h2>Contacto</h2>
+      <p>
+        ¿Sos una empresa, universidad, sponsor u organización y querés trabajar con nosotros?
+        Escribinos por cualquiera de estos motivos:
+      </p>
+      <ul class="contacto-reasons">
+        <li>Sponsors</li>
+        <li>Alianzas</li>
+        <li>Eventos</li>
+        <li>Charlas</li>
+        <li>Prensa</li>
+        <li>Colaboraciones</li>
+      </ul>
+      <div class="contacto-socials">
+        <a href="#">Telegram</a>
+        <a href="#">Twitter/X</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">Instagram</a>
+      </div>
+    </div>
+
+    <form class="contacto-form" id="contactForm" novalidate>
+      <div class="form-group">
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" name="nombre" required>
+        <span class="error-msg" data-for="nombre"></span>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+        <span class="error-msg" data-for="email"></span>
+      </div>
+      <div class="form-group">
+        <label for="organizacion">Organización</label>
+        <input type="text" id="organizacion" name="organizacion">
+        <span class="error-msg" data-for="organizacion"></span>
+      </div>
+      <div class="form-group">
+        <label for="motivo">Motivo</label>
+        <select id="motivo" name="motivo" required>
+          <option class="option_black" value="">Seleccionar...</option>
+          <option class="option_black" value="sponsor">Sponsors</option>
+          <option class="option_black" value="alianza">Alianzas</option>
+          <option class="option_black" value="evento">Eventos</option>
+          <option class="option_black" value="charla">Charlas</option>
+          <option class="option_black" value="prensa">Prensa</option>
+          <option class="option_black" value="colaboracion">Colaboraciones</option>
+        </select>
+        <span class="error-msg" data-for="motivo"></span>
+      </div>
+      <div class="form-group">
+        <label for="mensaje">Mensaje</label>
+        <textarea id="mensaje" name="mensaje" rows="4" required></textarea>
+        <span class="error-msg" data-for="mensaje"></span>
+      </div>
+      <button type="submit" class="btn btn-primary">Enviar</button>
+      <p class="form-success" id="formSuccess" hidden>¡Gracias! Te responderemos a la brevedad.</p>
+    </form>
+  </div>
+</section>
+
+<style>
+
+/* ============ CONTACTO ============ */
+.contacto { padding: 60px 32px 100px; max-width: 1280px; margin: 0 auto; }
+.contacto-grid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 48px;
+}
+.contacto-info h2 { font-size: clamp(1.8rem, 4vw, 2.4rem); margin-bottom: 16px; }
+.contacto-info p { color: var(--text-muted); margin-bottom: 24px; max-width: 420px; }
+.contacto-reasons {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 32px;
+}
+.contacto-reasons li {
+  padding: 10px 14px;
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.contacto-socials {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.contacto-socials a {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.contacto-socials a:hover { color: var(--primary); border-color: var(--primary); }
+
+.contacto-form {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  padding: 32px;
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.option_black {background-color:rgb(20, 19, 19);}
+.form-group label { font-size: 0.85rem; color: var(--text-muted); }
+.form-group input,
+.form-group select,
+.form-group textarea {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  transition: border-color 0.2s ease;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+.form-group.error input,
+.form-group.error select,
+.form-group.error textarea {
+  border-color: #ff5d5d;
+}
+.error-msg {
+  font-size: 0.75rem;
+  color: #ff5d5d;
+  min-height: 14px;
+}
+.form-success {
+  color: var(--primary);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .contacto-grid { grid-template-columns: 1fr; }
+  .contacto-reasons { grid-template-columns: 1fr 1fr; }
+}
+</style>
+
+<script>
+  // ============ FORMULARIO DE CONTACTO ============
+  const form = document.getElementById('contactForm') as HTMLFormElement | null;
+  const formSuccess = document.getElementById('formSuccess') as HTMLElement | null;
+
+  if (form) {
+    type FieldName = 'nombre' | 'email' | 'organizacion' | 'motivo' | 'mensaje';
+
+    const validators: Record<FieldName, (v: string) => string> = {
+      nombre:       (v) => v.trim().length >= 2 ? '' : 'Ingresá tu nombre completo.',
+      email:        (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? '' : 'Ingresá un email válido.',
+      organizacion: ()  => '',
+      motivo:       (v) => v ? '' : 'Seleccioná un motivo.',
+      mensaje:      (v) => v.trim().length >= 10 ? '' : 'Tu mensaje debe tener al menos 10 caracteres.'
+    };
+
+    const validateField = (field: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement): boolean => {
+      const name = field.name as FieldName;
+      if (!validators[name]) return true;
+
+      const errorMsg = validators[name](field.value);
+      const group = field.closest<HTMLElement>('.form-group');
+      if (!group) return true;
+
+      const errorEl = group.querySelector('.error-msg');
+
+      if (errorMsg) {
+        group.classList.add('error');
+        if (errorEl) errorEl.textContent = errorMsg;
+        return false;
+      } else {
+        group.classList.remove('error');
+        if (errorEl) errorEl.textContent = '';
+        return true;
+      }
+    };
+
+    form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('input, select, textarea')
+      .forEach(field => {
+        field.addEventListener('blur', () => validateField(field));
+        field.addEventListener('input', () => {
+          const group = field.closest<HTMLElement>('.form-group');
+          if (group?.classList.contains('error')) validateField(field);
+        });
+      });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      let valid = true;
+
+      form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('input, select, textarea')
+        .forEach(field => { if (!validateField(field)) valid = false; });
+
+      if (valid) {
+        if (formSuccess) formSuccess.hidden = false;
+        form.reset();
+        setTimeout(() => { if (formSuccess) formSuccess.hidden = true; }, 4000);
+      } else if (formSuccess) {
+        formSuccess.hidden = true;
+      }
+    });
+  }
+</script>
