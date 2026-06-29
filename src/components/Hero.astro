@@ -97,7 +97,29 @@
   color: var(--text-muted);
   font-size: 0.85rem;
 }
+/* ============ RESPONSIVE GLOBAL ============ */
+@media (max-width: 968px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-right { order: -1; }
+  .nav-links { display: none; }
+  .nav-cta { display: none; }
+  .burger { display: flex; }
 
+  .nav-links.open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%; left: 0; right: 0;
+    background: rgba(8,8,8,0.95);
+    backdrop-filter: blur(16px);
+    padding: 24px 32px;
+    gap: 20px;
+    border-bottom: 1px solid var(--glass-border);
+  }
+}
+@media (max-width: 600px) {
+  .hero { padding: 130px 20px 60px; }
+}
 </style>
 
 <script type="module">

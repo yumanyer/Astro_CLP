@@ -88,4 +88,21 @@ const team = [
   gap: 32px;
   padding: 20px 0;
 }
+@media (max-width: 960px) {
+  .team-grid { 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 24px;
+  }
+  .team-card { height: 360px; }
+}
+
+@media (max-width: 640px) {
+  .team-grid { 
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  .team-card { height: 340px; }
+  .team-photo { width: 120px; height: 120px; font-size: 2rem; }
+}
 </style>

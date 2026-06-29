@@ -308,4 +308,27 @@ const { year, angle, active = false } = Astro.props;
   cursor: pointer;
   pointer-events: all;
 }
+/* ----- Responsive ----- */
+@media (max-width: 900px) {
+  .orbital-wrap {
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
+  .orbital-container {
+    --size: min(90vw, 420px);
+  }
+  .orbital-item {
+    width: 52px;
+    height: 52px;
+    margin: -26px;
+    font-size: 0.75rem;
+  }
+}
+/* Respeto a quienes prefieren menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  .orbital-ring,
+  .orbital-year {
+    animation: none;
+  }
+}
 </style>
