@@ -9,7 +9,7 @@ const eventData = {
   title: "Hackathon CLP 2026",
   date: "18 de Abril, 2026 — 09:00 hs",
   location: "📍 Sede a confirmar, La Plata",
-  targetDate: "2026-04-18T09:00:00" // Para el JS del contador más adelante
+  targetDate: "2026-07-30T09:00:00" // Para el JS del contador más adelante
 };
 ---
 
@@ -136,5 +136,42 @@ const eventData = {
 .status-text { display: flex; flex-direction: column; gap: 2px; }
 .status-text strong { font-family: var(--font-title); font-size: 0.95rem; font-weight: 700; }
 .status-text small { color: var(--text-muted); font-size: 0.78rem; }
+
+ @media (max-width: 900px) {
+    .proximo-card {
+      flex-direction: column; /* Apila el contenido verticalmente */
+      text-align: center;
+      padding: 32px 24px;
+    }
+
+    .proximo-info {
+      max-width: 100%;
+    }
+
+    .proximo-countdown {
+      width: 100%;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .proximo-status {
+      width: 100%;
+      flex-direction: column; /* Apila los estados en "En organización" */
+      gap: 16px;
+    }
+    
+    .cd-box {
+      min-width: 70px; /* Hace los cuadros del contador un poco más chicos */
+      padding: 12px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .proximo-countdown {
+      display: grid;
+      grid-template-columns: 1fr 1fr; /* 2x2 en pantallas muy chicas */
+      gap: 10px;
+    }
+  }
 
 </style>
