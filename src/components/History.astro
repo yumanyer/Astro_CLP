@@ -1,55 +1,87 @@
 ---
+import OrbitalItem from './OrbitalItem.astro';
+import StoryViewer from './StoryViewer.astro';
 const orbitalData = {
   "2017": {
     title: "Primeros encuentros",
     text: "Nace la comunidad con meetups informales sobre blockchain.",
-    media: [{type:'img', src:'/img/eventos/pizzaday.jpg'}]
-  },
+    media: [
+      {type:'img', src:'img/year/2024_1.jpg'}, 
+      {type:'img', src:'img/year/2024_1.jpg'}, 
+      {type:'img', src:'img/year/2024_1.jpg'}, 
+      {type:'img', src:'img/year/2024_1.jpg'}]},
   "2018": {
     title: "Primeros talleres",
     text: "Charlas introductorias a Bitcoin y Ethereum en espacios universitarios.",
-    media: [{type:'img', src:'/img/eventos/pizzaday.jpg'}]
-  },
+    media: [
+      {type:'img', src:'img/year/2024_1.jpg'}, 
+      {type:'img', src:'img/year/2024_1.jpg'}, 
+      {type:'img', src:'img/year/2024_1.jpg'}, 
+      {type:'img', src:'img/year/2024_1.jpg'}]},
   "2019": {
     title: "Alianzas locales",
     text: "Primeras colaboraciones con espacios de coworking y hubs tech.",
-    media: [{type:'img', src:'/img/eventos/pizzaday.jpg'}]
-  },
+    media: [
+      {type:'img', src:'img/year/2024_1.jpg'}, 
+      {type:'img', src:'img/year/2024_1.jpg'}, 
+      {type:'img', src:'img/year/2024_1.jpg'}, 
+      {type:'img', src:'img/year/2024_1.jpg'}]},
   "2020": {
     title: "Eventos virtuales",
     text: "La comunidad migra a formatos online, sumando alcance nacional.",
-    media: [{type:'img', src:'/img/eventos/pizzaday.jpg'}]
-  },
+    media: [
+      {type:'img', src:'img/year/2024_1.jpg'}, 
+      {type:'img', src:'img/year/2024_1.jpg'}, 
+      {type:'img', src:'img/year/2024_1.jpg'}, 
+      {type:'img', src:'img/year/2024_1.jpg'}]},
   "2021": {
     title: "Boom Web3",
     text: "Crecimiento acelerado de miembros y primeras meetups masivas presenciales.",
-    media: [{type:'img', src:'/img/eventos/pizzaday.jpg'}]
-  },
+    media: [
+      {type:'img', src:'img/year/2024_1.jpg'}, 
+      {type:'img', src:'img/year/2024_1.jpg'}, 
+      {type:'img', src:'img/year/2024_1.jpg'}, 
+      {type:'img', src:'img/year/2024_1.jpg'}]},
   "2022": {
     title: "Educación formal",
     text: "Primeros cursos y programas educativos junto a universidades.",
-    media: [{type:'img', src:'/img/eventos/pizzaday.jpg'}]
-  },
+    media: [
+      {type:'img', src:'img/year/2024_1.jpg'}, 
+      {type:'img', src:'img/year/2024_1.jpg'}, 
+      {type:'img', src:'img/year/2024_1.jpg'}, 
+      {type:'img', src:'img/year/2024_1.jpg'}]},
   "2023": {
     title: "Red de voluntariado",
     text: "Se conforma la red de voluntariado tecnológico de la comunidad.",
-    media: [{type:'img', src:'/img/eventos/pizzaday.jpg'}]
-  },
+    media: [
+      {type:'img', src:'img/year/2024_1.jpg'}, 
+      {type:'img', src:'img/year/2024_1.jpg'}, 
+      {type:'img', src:'img/year/2024_1.jpg'}, 
+      {type:'img', src:'img/year/2024_1.jpg'}]  },
   "2024": {
     title: "Eventos insignia",
     text: "Consolidación de eventos propios de referencia en la región.",
-    media: [{type:'img', src:'/img/eventos/pizzaday.jpg'}]
+    media: [
+      {type:'img', src:'img/year/2024_1.webp'}, 
+      {type:'img', src:'img/year/2024_2.webp'}, 
+      {type:'img', src:'img/year/2024_3.webp'},]
   },
   "2025": {
     title: "Expansión institucional",
     text: "Nuevas alianzas con organizaciones, sponsors y protocolos.",
-    media: [{type:'img', src:'/img/eventos/pizzaday.jpg'}]
-  },
+    media: [
+      {type:'img', src:'img/year/2024_1.jpg'}, 
+      {type:'img', src:'img/year/2024_1.jpg'}, 
+      {type:'img', src:'img/year/2024_1.jpg'}, 
+      {type:'img', src:'img/year/2024_1.jpg'}]},
   "actualidad": {
     title: "Hacia el futuro",
     text: "Seguimos creciendo como referencia Web3 de La Plata.",
-    media: [{type:'img', src:'/img/eventos/pizzaday.jpg'}]
-  }
+    media: [
+      {type:'img', src:'img/year/2024_1.jpg'}, 
+      {type:'img', src:'img/year/2024_1.jpg'}, 
+      {type:'img', src:'img/year/2024_1.jpg'}, 
+      {type:'img', src:'img/year/2024_1.jpg'}]}
 };
 
 const years = Object.keys(orbitalData);
@@ -68,13 +100,11 @@ const years = Object.keys(orbitalData);
         {years.map((year, index) => {
           const angle = (index * (360 / years.length)) + 198;
           return (
-            <button 
-              class={`orbital-item ${year === '2017' ? 'active' : ''}`} 
-              data-year={year} 
-              style={`--angle:${angle}deg`}
-            >
-              <span class="orbital-year">{year === 'actualidad' ? 'Hoy' : year}</span>
-            </button>
+            <OrbitalItem 
+              year={year} 
+              angle={angle} 
+              active={year === '2017'} 
+            />
           )
         })}
       </div>
@@ -84,9 +114,14 @@ const years = Object.keys(orbitalData);
       <span class="info-year" id="infoYear">2017</span>
       <h3 id="infoTitle">Primeros encuentros</h3>
       <p id="infoText">Nace la comunidad con meetups informales sobre blockchain.</p>
-      <div class="info-media" id="infoMedia"></div>
+      <div class="info-media" id="infoMedia">
+        <!-- Las imágenes aquí ahora abrirán el StoryViewer -->
+      </div>
     </div>
   </div>
+
+  <!-- Componente StoryViewer (Modal oculto) -->
+  <StoryViewer />
 </section>
 
 <script define:vars={{ orbitalData }}>
@@ -97,38 +132,64 @@ const years = Object.keys(orbitalData);
   const infoMedia = document.getElementById('infoMedia');
   const items = document.querySelectorAll('.orbital-item');
 
+  function updateInfoPanel(year) {
+    const data = orbitalData[year];
+    
+    orbitalInfo.classList.remove('fade');
+    void orbitalInfo.offsetWidth; // trigger reflow
+    orbitalInfo.classList.add('fade');
+
+    infoYear.textContent = year === 'actualidad' ? 'Hoy' : year;
+    infoTitle.textContent = data.title;
+    infoText.textContent = data.text;
+    
+    infoMedia.innerHTML = '';
+    data.media.forEach((m, index) => {
+      if (m.type === 'img') {
+        const img = document.createElement('img');
+        img.src = m.src;
+        img.className = 'info-thumb';
+        img.title = "Click para ver historia";
+        
+        // Al hacer clic en la miniatura, disparamos el evento para abrir el StoryViewer
+        img.addEventListener('click', () => {
+          const event = new CustomEvent('open-stories', {
+            detail: {
+              stories: data.media,
+              startIndex: index
+            }
+          });
+          window.dispatchEvent(event);
+        });
+        
+        infoMedia.appendChild(img);
+      }
+    });
+  }
+
   items.forEach(item => {
     item.addEventListener('click', () => {
       const year = item.getAttribute('data-year');
-      const data = orbitalData[year];
-
       items.forEach(i => i.classList.remove('active'));
       item.classList.add('active');
-
-      orbitalInfo.classList.remove('fade');
-      void orbitalInfo.offsetWidth; // trigger reflow
-      orbitalInfo.classList.add('fade');
-
-      infoYear.textContent = year === 'actualidad' ? 'Hoy' : year;
-      infoTitle.textContent = data.title;
-      infoText.textContent = data.text;
-      
-      infoMedia.innerHTML = '';
-      data.media.forEach(m => {
-        if (m.type === 'img') {
-          const img = document.createElement('img');
-          img.src = m.src;
-          img.style.width = '80px';
-          img.style.borderRadius = '8px';
-          infoMedia.appendChild(img);
-        }
-      });
+      updateInfoPanel(year);
     });
   });
+
+  // Inicializar el primer año
+  updateInfoPanel("2017");
 </script>
 
+<style is:global>
+  .orbital-container {
+    --size: clamp(380px, 45vw, 560px);
+    --radius: calc(var(--size) / 2 - 50px);
+    --orbit-duration: 90s;
+  }
+</style>
+
 <style>
-  .historia { padding: 100px 0; }
+  .historia { padding: 100px 0; position: relative; }
 
   .orbital-wrap {
     display: grid;
@@ -140,9 +201,6 @@ const years = Object.keys(orbitalData);
   }
 
   .orbital-container {
-    --size: clamp(380px, 45vw, 560px);
-    --radius: calc(var(--size) / 2 - 50px);
-    --orbit-duration: 90s;
     position: relative;
     width: var(--size);
     height: var(--size);
@@ -171,59 +229,13 @@ const years = Object.keys(orbitalData);
   }
 
   .orbital-container:hover .orbital-ring,
-  .orbital-container:hover .orbital-year {
+  .orbital-container:hover .orbital-item .orbital-year {
     animation-play-state: paused;
   }
 
   @keyframes orbitSpin {
     from { transform: rotate(0deg); }
     to   { transform: rotate(360deg); }
-  }
-
-  .orbital-item {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 64px;
-    height: 64px;
-    margin: -32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    border: 1px solid var(--glass-border);
-    background: var(--glass-bg);
-    backdrop-filter: blur(8px);
-    color: var(--text-muted);
-    font-family: var(--font-title);
-    font-weight: 700;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: border-color 0.25s ease, color 0.25s ease, background 0.25s ease, transform 0.25s ease;
-    transform: rotate(var(--angle)) translate(var(--radius));
-  }
-
-  .orbital-item:hover {
-    color: var(--white);
-    border-color: var(--primary);
-  }
-
-  .orbital-item.active {
-    color: var(--white);
-    border-color: var(--primary);
-    background: var(--gradient);
-    box-shadow: 0 0 24px rgba(4,255,183,0.3);
-    transform: rotate(var(--angle)) translate(var(--radius)) scale(1.15);
-  }
-
-  .orbital-year {
-    display: inline-block;
-    transform: rotate(calc(-1 * var(--angle)));
-    animation: counterSpin var(--orbit-duration) linear infinite;
-  }
-  @keyframes counterSpin {
-    from { transform: rotate(calc(-1 * var(--angle))) rotate(0deg); }
-    to   { transform: rotate(calc(-1 * var(--angle))) rotate(-360deg); }
   }
 
   .orbital-info {
@@ -257,6 +269,21 @@ const years = Object.keys(orbitalData);
     gap: 12px;
   }
 
+  :global(.info-thumb) {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+    border: 2px solid transparent;
+  }
+
+  :global(.info-thumb:hover) {
+    transform: scale(1.05);
+    border-color: var(--primary);
+  }
+
   .orbital-info.fade {
     animation: fadeInfo 0.3s ease;
   }
@@ -269,15 +296,6 @@ const years = Object.keys(orbitalData);
     .orbital-wrap {
       grid-template-columns: 1fr;
       gap: 60px;
-    }
-    .orbital-container {
-      --size: min(90vw, 420px);
-    }
-    .orbital-item {
-      width: 52px;
-      height: 52px;
-      margin: -26px;
-      font-size: 0.75rem;
     }
   }
 </style>

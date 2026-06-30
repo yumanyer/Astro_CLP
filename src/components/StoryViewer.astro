@@ -1,0 +1,246 @@
+---
+// src/components/StoryViewer.astro
+---
+
+<div id="storyOverlay" class="hidden">
+  <div class="story-backdrop"></div>
+  
+  <div class="story-modal">
+    <div class="story-bars" id="storyBars"></div>
+    
+    <button class="story-close" id="closeStory" aria-label="Cerrar">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </button>
+    
+    <div class="story-media" id="storyMediaContainer"></div>
+    
+    <div class="story-caption" id="storyCaption"></div>
+    
+    <div class="story-nav">
+      <button class="story-prev" id="prevStory"></button>
+      <button class="story-next" id="nextStory"></button>
+    </div>
+  </div>
+</div>
+
+<script>
+  interface Story {
+    type: 'img' | 'video';
+    src: string;
+    title?: string;
+  }
+
+  let currentStories: Story[] = [];
+  let currentIndex = 0;
+  let progressTimeout: number | undefined;
+  const DURATION = 4000;
+
+  const overlay = document.getElementById('storyOverlay');
+  const barsContainer = document.getElementById('storyBars');
+  const mediaContainer = document.getElementById('storyMediaContainer');
+  const caption = document.getElementById('storyCaption');
+  const closeBtn = document.getElementById('closeStory');
+  const prevBtn = document.getElementById('prevStory');
+  const nextBtn = document.getElementById('nextStory');
+
+  function showStory(index: number) {
+    if (!currentStories.length) return;
+    if (index < 0 || index >= currentStories.length) {
+      closeStoryViewer();
+      return;
+    }
+    
+    currentIndex = index;
+    const story = currentStories[currentIndex];
+    
+    updateBars();
+    
+    if (mediaContainer) {
+      mediaContainer.innerHTML = '';
+      if (story.type === 'img') {
+        const img = document.createElement('img');
+        img.src = story.src;
+        img.alt = story.title || 'Historia';
+        mediaContainer.appendChild(img);
+      }
+    }
+    
+    if (caption) {
+      caption.textContent = story.title || '';
+    }
+    
+    startProgress();
+  }
+
+  function updateBars() {
+    if (!barsContainer) return;
+    barsContainer.innerHTML = '';
+    currentStories.forEach((_, i) => {
+      const bar = document.createElement('div');
+      bar.className = 'story-bar';
+      const fill = document.createElement('div');
+      fill.className = 'story-bar-fill';
+      
+      if (i < currentIndex) fill.classList.add('done');
+      if (i === currentIndex) fill.classList.add('active');
+      
+      bar.appendChild(fill);
+      barsContainer.appendChild(bar);
+    });
+  }
+
+  function startProgress() {
+    clearTimeout(progressTimeout);
+    progressTimeout = window.setTimeout(() => {
+      showStory(currentIndex + 1);
+    }, DURATION);
+  }
+
+  function closeStoryViewer() {
+    if (overlay) overlay.classList.add('hidden');
+    clearTimeout(progressTimeout);
+    document.body.style.overflow = '';
+  }
+
+  closeBtn?.addEventListener('click', closeStoryViewer);
+  prevBtn?.addEventListener('click', () => showStory(currentIndex - 1));
+  nextBtn?.addEventListener('click', () => showStory(currentIndex + 1));
+  
+  overlay?.querySelector('.story-backdrop')?.addEventListener('click', closeStoryViewer);
+
+  window.addEventListener('open-stories', (e: Event) => {
+    const customEvent = e as CustomEvent<{ stories: Story[], startIndex?: number }>;
+    const { stories, startIndex = 0 } = customEvent.detail;
+    currentStories = stories;
+    if (overlay) {
+      overlay.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      showStory(startIndex);
+    }
+  });
+</script>
+
+<style>/* ============ STORY VIEWER (overlay) ============ */
+#storyOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.story-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(12px);
+}
+
+.story-modal {
+  position: relative;
+  width: min(420px, 96vw);
+  aspect-ratio: 9/16;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #111;
+  box-shadow: 0 0 60px rgba(0,0,0,0.6);
+}
+
+/* Barras de progreso */
+.story-bars {
+  position: absolute;
+  top: 14px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  gap: 4px;
+  z-index: 10;
+}
+.story-bar {
+  flex: 1;
+  height: 3px;
+  border-radius: 99px;
+  background: rgba(255,255,255,0.3);
+  overflow: hidden;
+}
+.story-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--white);
+}
+.story-bar-fill.done {
+  width: 100%;
+}
+.story-bar-fill.active {
+  animation: storyProgress 4s linear forwards;
+}
+@keyframes storyProgress {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
+
+/* Botón cerrar */
+.story-close {
+  position: absolute;
+  top: 36px;
+  right: 14px;
+  z-index: 10;
+  background: rgba(0,0,0,0.35);
+  border: none;
+  color: var(--white);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Imagen/video */
+.story-media {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+.story-media img,
+.story-media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Caption */
+.story-caption {
+  position: absolute;
+  bottom: 24px;
+  left: 0; right: 0;
+  text-align: center;
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--white);
+  text-shadow: 0 2px 12px rgba(0,0,0,0.7);
+  padding: 0 20px;
+  z-index: 10;
+}
+
+/* Botones nav invisibles izq/der */
+.story-nav {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  z-index: 5;
+  pointer-events: none;
+}
+.story-prev, .story-next {
+  flex: 1;
+  background: none;
+  border: none;
+  cursor: pointer;
+  pointer-events: all;
+}
+</style>

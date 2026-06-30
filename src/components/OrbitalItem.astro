@@ -1,7 +1,6 @@
 ---
 // src/components/OrbitalItem.astro
 const { year, angle, active = false } = Astro.props;
-
 ---
 
 <button 
@@ -13,322 +12,65 @@ const { year, angle, active = false } = Astro.props;
 </button>
 
 <style>
-
-.historia { padding: 100px 0; }
-
-.orbital-wrap {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  align-items: center;
-  margin: 0 auto;
-  padding: 0 32px;
-}
-
-/* ----- Contenedor circular ----- */
-.orbital-container {
-  --size: clamp(380px, 45vw, 560px);
-  --radius: calc(var(--size) / 2 - 50px);
-  --orbit-duration: 90s; /* tiempo para una vuelta completa */
-  position: relative;
-  width: var(--size);
-  height: var(--size);
-  margin: 0 auto;
-  border-radius: 50%;
-  border: 1px dashed var(--glass-border);
-}
-
-.orbital-logo {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 90px;
-  height: 90px;
-  object-fit: contain;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  filter: drop-shadow(0 0 24px rgba(4,255,183,0.25));
-  z-index: 2; /* siempre por encima del anillo */
-}
-
-/* ----- Anillo que gira ----- */
-.orbital-ring {
-  position: absolute;
-  inset: 0;
-  animation: orbitSpin var(--orbit-duration) linear infinite;
-}
-
-/* Pausar el giro al pasar el mouse, para poder leer/clickear cómodo */
-.orbital-container:hover .orbital-ring,
-.orbital-container:hover .orbital-year {
-  animation-play-state: paused;
-}
-
-@keyframes orbitSpin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-
-/* ----- Items orbitando (posición fija dentro del anillo) ----- */
-.orbital-item {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 64px;
-  height: 64px;
-  margin: -32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  border: 1px solid var(--glass-border);
-  background: var(--glass-bg);
-  backdrop-filter: blur(8px);
-  color: var(--text-muted);
-  font-family: var(--font-title);
-  font-weight: 700;
-  font-size: 0.85rem;
-  cursor: pointer;
-  transition: border-color 0.25s ease, color 0.25s ease, background 0.25s ease, transform 0.25s ease;
-
-  transform: rotate(var(--angle)) translate(var(--radius));
-}
-
-.orbital-item:hover {
-  color: var(--white);
-  border-color: var(--primary);
-}
-
-.orbital-item.active {
-  color: var(--white);
-  border-color: var(--primary);
-  background: var(--gradient);
-  box-shadow: 0 0 24px rgba(4,255,183,0.3);
-  transform: rotate(var(--angle)) translate(var(--radius)) scale(1.15);
-}
-
-/* ----- Contra-rotación del texto: mantiene los años "derechos" ----- */
-.orbital-year {
-  display: inline-block;
-  transform: rotate(calc(-1 * var(--angle)));
-  animation: counterSpin var(--orbit-duration) linear infinite;
-}
-@keyframes counterSpin {
-  from { transform: rotate(calc(-1 * var(--angle))) rotate(0deg); }
-  to   { transform: rotate(calc(-1 * var(--angle))) rotate(-360deg); }
-}
-
-/* Respeto a quienes prefieren menos movimiento */
-@media (prefers-reduced-motion: reduce) {
-  .orbital-ring,
-  .orbital-year {
-    animation: none;
-  }
-}
-
-/* ----- Panel de info ----- */
-.orbital-info {
-  padding: 32px;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-lg);
-  backdrop-filter: blur(8px);
-  min-height: 280px;
-}
-
-.info-year {
-  display: inline-block;
-  font-family: var(--font-title);
-  font-weight: 700;
-  font-size: 1.4rem;
-  margin-bottom: 12px;
-  background: var(--gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.orbital-info h3 { font-size: 1.2rem; margin-bottom: 12px; }
-.orbital-info p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; }
-
-.info-media {
-  margin-top: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-
-/* ----- Animación de transición del panel ----- */
-.orbital-info.fade {
-  animation: fadeInfo 0.3s ease;
-}
-@keyframes fadeInfo {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* ----- Responsive ----- */
-@media (max-width: 900px) {
-  .orbital-wrap {
-    grid-template-columns: 1fr;
-    gap: 60px;
-  }
-  .orbital-container {
-    --size: min(90vw, 420px);
-  }
   .orbital-item {
-    width: 52px;
-    height: 52px;
-    margin: -26px;
-    font-size: 0.75rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 64px;
+    height: 64px;
+    margin: -32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    backdrop-filter: blur(8px);
+    color: var(--text-muted);
+    font-family: var(--font-title);
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: border-color 0.25s ease, color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+    transform: rotate(var(--angle)) translate(var(--radius));
   }
-}
 
-/* ============ STORY VIEWER (overlay) ============ */
-#storyOverlay {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.story-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.85);
-  backdrop-filter: blur(12px);
-}
-
-.story-modal {
-  position: relative;
-  width: min(420px, 96vw);
-  aspect-ratio: 9/16;
-  border-radius: 20px;
-  overflow: hidden;
-  background: #111;
-  box-shadow: 0 0 60px rgba(0,0,0,0.6);
-}
-
-/* Barras de progreso */
-.story-bars {
-  position: absolute;
-  top: 14px;
-  left: 12px;
-  right: 12px;
-  display: flex;
-  gap: 4px;
-  z-index: 10;
-}
-.story-bar {
-  flex: 1;
-  height: 3px;
-  border-radius: 99px;
-  background: rgba(255,255,255,0.3);
-  overflow: hidden;
-}
-.story-bar-fill {
-  height: 100%;
-  width: 0%;
-  background: var(--white);
-}
-.story-bar-fill.done {
-  width: 100%;
-}
-.story-bar-fill.active {
-  animation: storyProgress 4s linear forwards;
-}
-@keyframes storyProgress {
-  from { width: 0%; }
-  to   { width: 100%; }
-}
-
-/* Botón cerrar */
-.story-close {
-  position: absolute;
-  top: 36px;
-  right: 14px;
-  z-index: 10;
-  background: rgba(0,0,0,0.35);
-  border: none;
-  color: var(--white);
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  font-size: 0.85rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Imagen/video */
-.story-media {
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-}
-.story-media img,
-.story-media video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* Caption */
-.story-caption {
-  position: absolute;
-  bottom: 24px;
-  left: 0; right: 0;
-  text-align: center;
-  font-family: var(--font-title);
-  font-weight: 700;
-  font-size: 1rem;
-  color: var(--white);
-  text-shadow: 0 2px 12px rgba(0,0,0,0.7);
-  padding: 0 20px;
-  z-index: 10;
-}
-
-/* Botones nav invisibles izq/der */
-.story-nav {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  z-index: 5;
-  pointer-events: none;
-}
-.story-prev, .story-next {
-  flex: 1;
-  background: none;
-  border: none;
-  cursor: pointer;
-  pointer-events: all;
-}
-/* ----- Responsive ----- */
-@media (max-width: 900px) {
-  .orbital-wrap {
-    grid-template-columns: 1fr;
-    gap: 60px;
+  .orbital-item:hover {
+    color: var(--white);
+    border-color: var(--primary);
   }
-  .orbital-container {
-    --size: min(90vw, 420px);
+
+  .orbital-item.active {
+    color: var(--white);
+    border-color: var(--primary);
+    background: var(--gradient);
+    box-shadow: 0 0 24px rgba(4,255,183,0.3);
+    transform: rotate(var(--angle)) translate(var(--radius)) scale(1.15);
   }
-  .orbital-item {
-    width: 52px;
-    height: 52px;
-    margin: -26px;
-    font-size: 0.75rem;
-  }
-}
-/* Respeto a quienes prefieren menos movimiento */
-@media (prefers-reduced-motion: reduce) {
-  .orbital-ring,
+
   .orbital-year {
-    animation: none;
+    display: inline-block;
+    transform: rotate(calc(-1 * var(--angle)));
+    animation: counterSpin var(--orbit-duration) linear infinite;
   }
-}
+
+  @keyframes counterSpin {
+    from { transform: rotate(calc(-1 * var(--angle))) rotate(0deg); }
+    to   { transform: rotate(calc(-1 * var(--angle))) rotate(-360deg); }
+  }
+
+  @media (max-width: 900px) {
+    .orbital-item {
+      width: 52px;
+      height: 52px;
+      margin: -26px;
+      font-size: 0.75rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .orbital-year {
+      animation: none;
+    }
+  }
 </style>
