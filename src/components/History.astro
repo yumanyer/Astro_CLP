@@ -84,7 +84,6 @@ const orbitalData = {
       {type:'img', src:'img/year/2024_1.webp'}, 
       {type:'img', src:'img/year/2024_1.webp'}]}
 };
-
 const years = Object.keys(orbitalData);
 ---
 
@@ -311,33 +310,35 @@ const years = Object.keys(orbitalData);
   .story-thumbs {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 10px;
+    margin-top: 16px;
   }
 
-.story-thumb {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: none;
-  padding: 3px;                                              /* deja ver el gradiente */
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  cursor: pointer;
-  flex-shrink: 0;
-  transition: transform 0.2s ease;
-}
-.story-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 2px solid var(--bg);                                /* crea el "hueco" del anillo */
-  display: block;
-}
+  .story-thumb {
+    position: relative;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: none;
+    padding: 3px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+  }
 
   .story-thumb:hover {
-    border-color: var(--primary);
     transform: scale(1.08);
+  }
+
+  .story-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid var(--bg);
+    display: block;
   }
 
   .story-thumb-ring {
@@ -350,16 +351,19 @@ const years = Object.keys(orbitalData);
 
   .story-thumb-more {
     background: var(--glass-bg);
-    border: 2px solid var(--glass-border);
-    font-weight: 700;
-    font-size: 0.85rem;
-    color: var(--text-muted);
+    border: 1px solid var(--glass-border) !important;
+    color: var(--white);
     font-family: var(--font-title);
+    font-size: 0.85rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .story-thumb-more:hover {
     border-color: var(--primary);
-    color: var(--white);
+    color: var(--primary);
   }
 
   .thumb-video-icon {

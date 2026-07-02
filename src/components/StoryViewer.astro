@@ -28,12 +28,15 @@
     title?: string;
   }
 
-  let currentStories: Story[] = [];
-  let currentIndex = 0;
-  let progressTimeout: number | undefined;
-  let isPaused = false;
-  const DURATION = 4000;
-
+  // Estado global del story viewer
+const storyState = {
+  index: 0,
+  media: [] as Story[],
+  title: '',
+  timer: null as number | null,
+  DURATION: 4000,
+  paused: false,
+};
   const overlay = document.getElementById('storyOverlay');
   const barsContainer = document.getElementById('storyBars');
   const mediaContainer = document.getElementById('storyMediaContainer');
@@ -43,28 +46,74 @@
   const nextBtn = document.getElementById('nextStory');
   const modal = overlay?.querySelector('.story-modal');
 
-  function showStory(index: number) {
-    if (!currentStories.length) return;
-    if (index < 0 || index >= currentStories.length) {
-      closeStoryViewer();
+  function closeStory() {
+    if (storyState.timer) clearTimeout(storyState.timer);
+    if (overlay) overlay.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+
+  function goStory(direction: number) {
+    const total = storyState.media.length;
+    const next = storyState.index + direction;
+
+    if (next < 0 || next >= total) {
+      closeStory();
       return;
     }
-    
-    currentIndex = index;
-    const story = currentStories[currentIndex];
-    
-    updateBars();
-    
+
+    storyState.index = next;
+    renderSlide();
+  }
+
+  function pauseStory() {
+    storyState.paused = true;
+    if (storyState.timer) clearTimeout(storyState.timer);
+
+    const activeFill = barsContainer?.querySelector('.story-bar-fill.active');
+    if (activeFill) (activeFill as HTMLElement).style.animationPlayState = 'paused';
+  }
+
+  function resumeStory() {
+    if (!storyState.paused) return;
+    storyState.paused = false;
+
+    const activeFill = barsContainer?.querySelector('.story-bar-fill.active');
+    if (activeFill) (activeFill as HTMLElement).style.animationPlayState = 'running';
+
+    storyState.timer = window.setTimeout(() => goStory(+1), storyState.DURATION);
+  }
+
+  function renderSlide() {
+    const { index, media, title, DURATION } = storyState;
+    const item = media[index];
+
+    if (!item) return;
+
+    // Actualizar barras de progreso
+    const fills = barsContainer?.querySelectorAll('.story-bar-fill');
+    if (fills && fills.length > 0) {
+      fills.forEach((fill, i) => {
+        fill.classList.remove('active', 'done');
+        if (i < index) fill.classList.add('done');
+        if (i === index) fill.classList.add('active');
+        (fill as HTMLElement).style.animation = 'none';
+        (fill as HTMLElement).offsetHeight; // reflow
+        (fill as HTMLElement).style.animation = '';
+      });
+    }
+
+    // Renderizar media
     if (mediaContainer) {
       mediaContainer.innerHTML = '';
-      if (story.type === 'img') {
+      if (item.type === 'img') {
         const img = document.createElement('img');
-        img.src = story.src;
-        img.alt = story.title || 'Historia';
+        img.src = item.src;
+        img.alt = title || 'Historia';
+        img.draggable = false;
         mediaContainer.appendChild(img);
-      } else if (story.type === 'video') {
+      } else if (item.type === 'video') {
         const video = document.createElement('video');
-        video.src = story.src;
+        video.src = item.src;
         video.autoplay = true;
         video.muted = true;
         video.playsInline = true;
@@ -72,73 +121,34 @@
         mediaContainer.appendChild(video);
       }
     }
-    
-    if (caption) {
-      caption.textContent = story.title || '';
+
+    if (caption) caption.textContent = title || '';
+
+    if (storyState.timer) clearTimeout(storyState.timer);
+    if (!storyState.paused) {
+      storyState.timer = window.setTimeout(() => goStory(+1), DURATION);
     }
-    
-    startProgress();
   }
 
-  function updateBars() {
+  function initStoryBars(mediaArr: Story[]) {
     if (!barsContainer) return;
     barsContainer.innerHTML = '';
-    currentStories.forEach((_, i) => {
+    
+    mediaArr.forEach(() => {
       const bar = document.createElement('div');
       bar.className = 'story-bar';
       const fill = document.createElement('div');
       fill.className = 'story-bar-fill';
-      
-      if (i < currentIndex) fill.classList.add('done');
-      if (i === currentIndex) {
-        fill.classList.add('active');
-        if (isPaused) fill.style.animationPlayState = 'paused';
-      }
-      
       bar.appendChild(fill);
       barsContainer.appendChild(bar);
     });
   }
 
-  function startProgress() {
-    clearTimeout(progressTimeout);
-    if (!isPaused) {
-      progressTimeout = window.setTimeout(() => {
-        goStory(+1);
-      }, DURATION);
-    }
-  }
-
-  function goStory(direction: number) {
-    showStory(currentIndex + direction);
-  }
-
-  function pauseStory() {
-    isPaused = true;
-    if (progressTimeout) clearTimeout(progressTimeout);
-    const activeFill = barsContainer?.querySelector('.story-bar-fill.active');
-    if (activeFill) (activeFill as HTMLElement).style.animationPlayState = 'paused';
-  }
-
-  function resumeStory() {
-    if (!isPaused) return;
-    isPaused = false;
-    const activeFill = barsContainer?.querySelector('.story-bar-fill.active');
-    if (activeFill) (activeFill as HTMLElement).style.animationPlayState = 'running';
-    startProgress();
-  }
-
-  function closeStoryViewer() {
-    if (overlay) overlay.classList.add('hidden');
-    clearTimeout(progressTimeout);
-    document.body.style.overflow = '';
-  }
-
-  closeBtn?.addEventListener('click', closeStoryViewer);
+  closeBtn?.addEventListener('click', closeStory);
   prevBtn?.addEventListener('click', () => goStory(-1));
   nextBtn?.addEventListener('click', () => goStory(+1));
   
-  overlay?.querySelector('.story-backdrop')?.addEventListener('click', closeStoryViewer);
+  overlay?.querySelector('.story-backdrop')?.addEventListener('click', closeStory);
 
   // Pausar al hacer click en el modal
   modal?.addEventListener('pointerdown', pauseStory);
@@ -150,18 +160,26 @@
     if (!overlay || overlay.classList.contains('hidden')) return;
     if (e.key === 'ArrowRight') goStory(+1);
     if (e.key === 'ArrowLeft') goStory(-1);
-    if (e.key === 'Escape') closeStoryViewer();
+    if (e.key === 'Escape') closeStory();
   });
 
   window.addEventListener('open-stories', (e: Event) => {
     const customEvent = e as CustomEvent<{ stories: Story[], startIndex?: number, title?: string }>;
-    const { stories, startIndex = 0 } = customEvent.detail;
-    currentStories = stories;
-    isPaused = false;
+    const { stories, startIndex = 0, title = '' } = customEvent.detail;
+    
+    storyState.index = startIndex;
+    storyState.media = stories;
+    storyState.title = title;
+    storyState.paused = false;
+    
+    if (storyState.timer) clearTimeout(storyState.timer);
+    
+    initStoryBars(stories);
+    
     if (overlay) {
       overlay.classList.remove('hidden');
       document.body.style.overflow = 'hidden';
-      showStory(startIndex);
+      renderSlide();
     }
   });
 </script>
