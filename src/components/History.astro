@@ -95,7 +95,7 @@ const years = Object.keys(orbitalData);
 
   <div class="orbital-wrap reveal">
     <div class="orbital-container" id="orbital">
-      <img src="/img/icon/CLP-premium.webp" class="orbital-logo" width="180" height="180" alt="CLP" decoding="async">      
+      <img src="/img/icon/CLP-premium.webp" class="orbital-logo" width="180" height="180" alt="CLP" decoding="async" loading="lazy">      
       <div class="orbital-ring">
         {years.map((year, index) => {
           const angle = (index * (360 / years.length)) + 198;

@@ -28,7 +28,7 @@ const { name, role, description, image, socials } = Astro.props;
         display: block;
         max-width: fit-content;
         " 
-    src={image} alt={name} />
+    src={image} alt={name} loading="lazy" />
     </div>
     <div class="team-info">
       <h3>{name}</h3>
