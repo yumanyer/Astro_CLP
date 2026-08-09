@@ -65,8 +65,8 @@
 - [X] Agregar `alt` a todas las imágenes. (Parcialmente hecho: `History.astro`, `Partners.astro`, `Events.astro`, `TeamCard.astro`, `Navbar.astro` usan atributos `alt`)
 - [ ] Revisar contraste de colores. (Pendiente: Requiere herramientas de auditoría)
 - [X] Verificar navegación mediante teclado. (Parcialmente hecho: `StoryViewer.astro` tiene navegación por teclado. ⚠️ Las tarjetas del equipo son focusables (`tabindex="0"`) pero no responden a Enter/Espacio porque el handler está comentado en `src/scripts/global.ts`)
-- [ ] Revisar atributos ARIA. (Parcialmente hecho: `Events.astro` usa `role="tablist"` y `role="tab"`. `Navbar.astro` usa `aria-expanded`. `StoryViewer.astro` usa `aria-label`. ⚠️ Los botones orbitales de `History.astro` no tienen `aria-pressed`/`aria-label`)
-- [ ] Fix tarjetas de equipo en móvil. (Pendiente: El toggle de `.active` está comentado en `src/scripts/global.ts`; sin hover la descripción y las redes no se expanden en pantallas táctiles)
+- [X] Revisar atributos ARIA. (Hecho: `Events.astro` usa `role="tablist"`/`role="tab"`, `Navbar.astro` usa `aria-expanded` + `aria-label`, `StoryViewer.astro` usa `aria-label`. ✅ Botones orbitales de `OrbitalItem.astro` ahora tienen `aria-pressed` (estado activo) + `aria-label` descriptivo, sincronizados en el click handler de `History.astro`)
+- [X] Fix tarjetas de equipo en móvil. (Hecho: `initTeamCards()` habilitado en `src/scripts/global.ts` — click-toggle solo en pantallas táctiles (`hover: none`/`pointer: coarse`) + cierre al tocar afuera, y teclado Enter/Espacio siempre. Sincroniza `aria-expanded` en `TeamCard.astro`)
 
 ---
 

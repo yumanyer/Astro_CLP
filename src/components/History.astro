@@ -207,8 +207,12 @@ const years = Object.keys(orbitalData);
   items.forEach(item => {
     item.addEventListener('click', () => {
       const year = item.getAttribute('data-year');
-      items.forEach(i => i.classList.remove('active'));
+      items.forEach(i => {
+        i.classList.remove('active');
+        i.setAttribute('aria-pressed', 'false');
+      });
       item.classList.add('active');
+      item.setAttribute('aria-pressed', 'true');
       updateInfoPanel(year);
     });
   });

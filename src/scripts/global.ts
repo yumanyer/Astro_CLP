@@ -17,34 +17,57 @@ if (revealEls.length > 0) {
   revealEls.forEach((el) => revealObserver.observe(el));
 }
 
-// ============ SOPORTE MOBILE: Core Team Cards ============
-// function initTeamCardsMobile(): void {
-//   const cards = document.querySelectorAll<HTMLElement>('.team-card');
+// ============ SOPORTE TÁCTIL Y TECLADO: Core Team Cards ============
+function initTeamCards(): void {
+  const cards = document.querySelectorAll<HTMLElement>('.team-card');
+  if (cards.length === 0) return;
 
-//   cards.forEach((card) => {
-//     card.addEventListener('click', function (this: HTMLElement, e: MouseEvent) {
-//       if ((e.target as HTMLElement).closest('.team-socials a')) return;
+  const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
 
-//       const isActive = this.classList.contains('active');
+  const setActive = (card: HTMLElement, active: boolean): void => {
+    card.classList.toggle('active', active);
+    card.setAttribute('aria-expanded', String(active));
+  };
 
-//       cards.forEach((c) => c.classList.remove('active'));
+  // Click: solo en pantallas táctiles (en desktop con mouse el hover alcanza)
+  if (isTouch) {
+    cards.forEach((card) => {
+      card.addEventListener('click', function (this: HTMLElement, e: MouseEvent) {
+        if ((e.target as HTMLElement).closest('.team-socials a')) return;
 
-//       if (!isActive) {
-//         this.classList.add('active');
-//       }
-//     });
+        const isActive = this.classList.contains('active');
 
-//     card.addEventListener('keydown', function (this: HTMLElement, e: KeyboardEvent) {
-//       if (e.key === 'Enter' || e.key === ' ') {
-//         e.preventDefault();
-//         this.click();
-//       }
-//     });
-//   });
+        cards.forEach((c) => setActive(c, false));
 
-//   document.addEventListener('click', (e: MouseEvent) => {
-//     if (!(e.target as HTMLElement).closest('.team-card')) {
-//       cards.forEach((c) => c.classList.remove('active'));
-//     }
-//   });
-// }
+        if (!isActive) {
+          setActive(this, true);
+        }
+      });
+    });
+
+    // Cerrar al tocar afuera
+    document.addEventListener('click', (e: MouseEvent) => {
+      if (!(e.target as HTMLElement).closest('.team-card')) {
+        cards.forEach((c) => setActive(c, false));
+      }
+    });
+  }
+
+  // Teclado: siempre (Enter/Espacio)
+  cards.forEach((card) => {
+    card.addEventListener('keydown', function (this: HTMLElement, e: KeyboardEvent) {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      e.preventDefault();
+
+      const isActive = this.classList.contains('active');
+
+      cards.forEach((c) => setActive(c, false));
+
+      if (!isActive) {
+        setActive(this, true);
+      }
+    });
+  });
+}
+
+document.addEventListener('DOMContentLoaded', initTeamCards);

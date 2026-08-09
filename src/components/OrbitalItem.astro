@@ -4,9 +4,12 @@ const { year, angle, active = false } = Astro.props;
 ---
 
 <button 
+  type="button" 
   class={`orbital-item ${active ? 'active' : ''}`} 
   data-year={year} 
   style={`--angle:${angle}deg`}
+  aria-pressed={active ? 'true' : 'false'}
+  aria-label={`Ver historia de ${year === 'actualidad' ? 'Hoy' : year}`}
 >
   <span class="orbital-year">{year === 'actualidad' ? 'Hoy' : year}</span>
 </button>
