@@ -47,7 +47,7 @@
 ---
 
 ## 📅 Eventos
-- [ ] Revisar el funcionamiento del contador. (Pendiente: `isConfirmed = false` hardcodeado en `NextEvent.astro`; la rama "evento confirmado" no tiene JS de countdown, la `targetDate` (30 Jul 2026) ya venció y el CTA "Reservar Lugar" es `href="#"`)
+- [X] Revisar el funcionamiento del contador. (Hecho: `isConfirmed` ya no está hardcodeado — se deriva dinámicamente de `targetDate` en `NextEvent.astro:16`. Implementado el JS de countdown completo (días/hs/min/seg con `setInterval` de 1s, cero-padded, corta en 00:00:00 al vencer). CTA "Reservar Lugar" usa `eventData.lumaUrl` con `target="_blank"` y fallback a `#contacto`. Con fecha actual (vencida) el sitio muestra el caso "en organización" correctamente; al setear una fecha futura renderiza el contador)
 - [X] Verificar la información de los eventos. (Hecho: `Events.astro` contiene un dataset de eventos con título, fecha, descripción, ubicación e imagen)
 - [X] Probar los enlaces hacia Luma. (Hecho: `Events.astro` tiene enlaces a Luma con `target="_blank"` y `rel="noopener noreferrer"`)
 
