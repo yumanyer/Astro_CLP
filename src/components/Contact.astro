@@ -66,7 +66,11 @@
         <textarea id="mensaje" name="mensaje" rows="4" required></textarea>
         <span class="error-msg" data-for="mensaje"></span>
       </div>
-      <button type="submit" class="btn btn-primary">Enviar</button>
+      <div class="form-group hp-field" aria-hidden="true">
+        <label for="website">No completar</label>
+        <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+      </div>
+      <button type="submit" class="btn btn-primary" id="submitBtn">Enviar</button>
       <p class="form-success" id="formSuccess" hidden>¡Gracias! Te responderemos a la brevedad.</p>
     </form>
   </div>
@@ -157,6 +161,18 @@
   text-align: center;
 }
 
+/* Honeypot: oculto visualmente, accesible solo a bots */
+.hp-field {
+  position: absolute !important;
+  left: -9999px;
+  top: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
 @media (max-width: 900px) {
   .contacto-grid { grid-template-columns: 1fr; }
   .contacto-reasons { grid-template-columns: 1fr 1fr; }
@@ -168,9 +184,12 @@
   // ============ FORMULARIO DE CONTACTO ============
   const form = document.getElementById('contactForm') as HTMLFormElement | null;
   const formSuccess = document.getElementById('formSuccess') as HTMLElement | null;
+  const submitBtn = document.getElementById('submitBtn') as HTMLButtonElement | null;
 
   if (form) {
     type FieldName = 'nombre' | 'email' | 'organizacion' | 'motivo' | 'mensaje';
+
+    let submitting = false;
 
     const validators: Record<FieldName, (v: string) => string> = {
       nombre:       (v) => v.trim().length >= 2 ? '' : 'Ingresá tu nombre completo.',
@@ -203,6 +222,7 @@
 
     form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('input, select, textarea')
       .forEach(field => {
+        if (field.name === 'website') return;
         field.addEventListener('blur', () => validateField(field));
         field.addEventListener('input', () => {
           const group = field.closest<HTMLElement>('.form-group');
@@ -212,17 +232,45 @@
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
+
+      // Honeypot: si el campo oculto tiene valor, es un bot → descartar sin feedback
+      const honeypot = form.querySelector<HTMLInputElement>('input[name="website"]');
+      if (honeypot && honeypot.value.trim() !== '') {
+        form.reset();
+        return;
+      }
+
+      // Evitar doble submit
+      if (submitting) return;
+      submitting = true;
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Enviando…';
+      }
+
       let valid = true;
 
       form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('input, select, textarea')
-        .forEach(field => { if (!validateField(field)) valid = false; });
+        .forEach(field => { if (field.name !== 'website' && !validateField(field)) valid = false; });
 
       if (valid) {
         if (formSuccess) formSuccess.hidden = false;
         form.reset();
-        setTimeout(() => { if (formSuccess) formSuccess.hidden = true; }, 4000);
-      } else if (formSuccess) {
-        formSuccess.hidden = true;
+        setTimeout(() => {
+          if (formSuccess) formSuccess.hidden = true;
+          submitting = false;
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Enviar';
+          }
+        }, 4000);
+      } else {
+        if (formSuccess) formSuccess.hidden = true;
+        submitting = false;
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Enviar';
+        }
       }
     });
   }

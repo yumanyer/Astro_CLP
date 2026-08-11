@@ -42,8 +42,7 @@
 - [X] Validar todos los campos. (Hecho: `Contact.astro` incluye validación frontend para nombre, email, teléfono, motivo y mensaje)
 - [ ] Mostrar mensajes de éxito y error. (Parcialmente hecho: `Contact.astro` muestra un mensaje de éxito, pero los mensajes de error son solo visuales y no se manejan a nivel de backend)
 - [ ] Probar el envío completo. (Pendiente: Requiere pruebas manuales y conexión a backend)
-- [ ] Implementar protección contra spam. (Pendiente: No hay evidencia de implementación de protección contra spam)
-
+- [X] Implementar protección contra spam. (Hecho: Frontend en `Contact.astro` — **Honeypot**: campo oculto `input[name="website"]` fuera de pantalla (`tabindex="-1"`, `autocomplete="off"`); si tiene valor, el bot se descarta sin feedback. **Doble submit**: flag `submitting` + botón deshabilitado con "Enviando…" mientras se procesa. Validación de campos existente se mantiene y se excluye del honeypot)
 ---
 
 ## 📅 Eventos
@@ -118,3 +117,9 @@
 - [ ] Traducción de la landing dependiendo de donde se encuentre
 - [ ] Fix copyright del footer: dice "© 2026" hardcodeado; `currentYear` se calcula en `Footer.astro` pero no se usa. (Pendiente)
 - [ ] Rutas de assets relativas (`img/...`, `1.glb`): funcionan en la raíz pero se rompen si se sirve bajo un subpath/base. (Pendiente)
+
+
+• Formato cuadrado (preferentemente 1:1).
+• Resolución mínima: 512x512 px.
+• Peso máximo: 450 KB.
+• Buena iluminación y que se vea claramente el rostro.

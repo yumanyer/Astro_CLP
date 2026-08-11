@@ -1,12 +1,12 @@
 ---
-// src/components/Team.astro
 import TeamCard from './TeamCard.astro';
 
 const team = [
   {
     name: 'Nahuel Suárez',
     role: 'Project Manager (PM)',
-    description: 'Liderando la visión estratégica y coordinación general de la comunidad.',
+    description:
+      'Liderando la visión estratégica y coordinación general de la comunidad.',
     image: 'img/team/lego_manu.webp',
     socials: [
       { platform: 'Twitter', url: '#' },
@@ -16,17 +16,25 @@ const team = [
   {
     name: 'Rous Espindola',
     role: 'Head of Comms (HoC)',
-    description: 'Voz de CLP, gestionando la comunicación y el alcance institucional.',
-    image: 'img/team/lego_manu.webp',
+    description:
+      'Voz de CLP, gestionando la comunicación y el alcance institucional.',
+    image: 'img/team/rous.webp',
     socials: [
-      { platform: 'Twitter', url: '#' },
-      { platform: 'Instagram', url: '#' }
+      {
+        platform: 'Twitter',
+        url: 'https://x.com/Rous_cripto'
+      },
+      {
+        platform: 'LinkedIn',
+        url: 'https://www.linkedin.com/in/rousespindola/'
+      }
     ]
   },
   {
     name: 'Andres Daspett',
     role: 'Treasury Manager (TM)',
-    description: 'Responsable de la gestión financiera y transparencia de recursos.',
+    description:
+      'Responsable de la gestión financiera y transparencia de recursos.',
     image: 'img/team/lego_manu.webp',
     socials: [
       { platform: 'Twitter', url: '#' },
@@ -36,17 +44,25 @@ const team = [
   {
     name: 'Manuel Pisoni',
     role: 'Dev Rel (DR)',
-    description: 'Conectando desarrolladores y facilitando la adopción tecnológica.',
+    description:
+      'Conectando desarrolladores y facilitando la adopción tecnológica.',
     image: 'img/team/lego_manu.webp',
     socials: [
-      { platform: 'Linkedin', url: 'https://www.linkedin.com/in/manuelpisoni/' },
-      { platform: 'GitHub', url: 'https://github.com/yumanyer/' }
+      {
+        platform: 'LinkedIn',
+        url: 'https://www.linkedin.com/in/manuelpisoni/'
+      },
+      {
+        platform: 'GitHub',
+        url: 'https://github.com/yumanyer/'
+      }
     ]
   },
   {
     name: 'Leandro Acuña',
     role: 'Operaciones & Comms (Ops)',
-    description: 'Optimización de procesos internos y soporte en comunicaciones.',
+    description:
+      'Optimización de procesos internos y soporte en comunicaciones.',
     image: 'img/team/lego_manu.webp',
     socials: [
       { platform: 'Twitter', url: '#' },
@@ -56,8 +72,9 @@ const team = [
   {
     name: 'Tomas Jaime',
     role: 'Operaciones & Comms (Ops)',
-    description: 'Gestión operativa y ejecución de estrategias de comunicación.',
-    image: 'img/team/lego_manu.webp',
+    description:
+      'Gestión operativa y ejecución de estrategias de comunicación.',
+    image: 'img/team/jaime.webp',
     socials: [
       { platform: 'Twitter', url: '#' },
       { platform: 'LinkedIn', url: '#' }
@@ -80,29 +97,31 @@ const team = [
 </section>
 
 <style>
-/* ============ CARD DE EQUIPO ============ */
-.equipo { padding: 60px 32px 100px; max-width: 1280px; margin: 0 auto; }
-.team-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
-  padding: 20px 0;
-}
-@media (max-width: 960px) {
-  .team-grid { 
-    grid-template-columns: repeat(2, 1fr); 
-    gap: 24px;
-  }
-  .team-card { height: 360px; }
-}
-
-@media (max-width: 640px) {
-  .team-grid { 
-    grid-template-columns: 1fr;
-    max-width: 400px;
+  .equipo {
+    padding: 60px 32px 100px;
+    max-width: 1280px;
     margin: 0 auto;
   }
-  .team-card { height: 340px; }
-  .team-photo { width: 120px; height: 120px; font-size: 2rem; }
-}
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    padding: 20px 0;
+  }
+
+  @media (max-width: 960px) {
+    .team-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .team-grid {
+      grid-template-columns: 1fr;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+  }
 </style>
