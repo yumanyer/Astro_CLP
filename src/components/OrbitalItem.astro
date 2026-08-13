@@ -1,5 +1,4 @@
 ---
-// src/components/OrbitalItem.astro
 const { year, angle, active = false } = Astro.props;
 ---
 
@@ -13,6 +12,7 @@ const { year, angle, active = false } = Astro.props;
 >
   <span class="orbital-year">{year === 'actualidad' ? 'Hoy' : year}</span>
 </button>
+
 
 <style>
   .orbital-item {
@@ -53,13 +53,10 @@ const { year, angle, active = false } = Astro.props;
 
   .orbital-year {
     display: inline-block;
-    transform: rotate(calc(-1 * var(--angle)));
-    animation: counterSpin var(--orbit-duration) linear infinite;
-  }
-
-  @keyframes counterSpin {
-    from { transform: rotate(calc(-1 * var(--angle))) rotate(0deg); }
-    to   { transform: rotate(calc(-1 * var(--angle))) rotate(-360deg); }
+    /* Contrarresta la posición fija propia (--angle) Y el giro
+       en vivo heredado del .orbital-ring (--spin). Sin el término
+       --spin, el texto giraría junto con el anillo. */
+    transform: rotate(calc(-1 * var(--angle) - var(--spin)));
   }
 
   @media (max-width: 900px) {
@@ -68,12 +65,6 @@ const { year, angle, active = false } = Astro.props;
       height: 52px;
       margin: -26px;
       font-size: 0.75rem;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .orbital-year {
-      animation: none;
     }
   }
 </style>

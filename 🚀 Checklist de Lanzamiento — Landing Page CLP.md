@@ -53,9 +53,9 @@
 ---
 
 ## 📖 Historia
-- [ ] Agregar todos los años pendientes. (Pendiente: Años 2017-2023 en `History.astro` usan `img/year/2024_1.webp` repetido 4 veces como placeholder)
-- [X] Verificar el visor de historias. (Hecho: `StoryViewer.astro` implementa la lógica del visor con navegación y barras de progreso)
-- [X] Revisar animaciones. (Hecho: `History.astro` y `StoryViewer.astro` incluyen animaciones y transiciones)
+- [ ] Agregar todos los años pendientes. (Pendiente: Años 2017-2023 en `History.astro` usan `img/year/2024_1.webp` como placeholder — 1 foto por año)
+- [X] Aplicar el prototipo de historia (1 foto + 3 hitos + lightbox). (Hecho: `History.astro` portado de `prototipo-historia` a Astro — datos inline con `photo`/`hitos`, lightbox con `Escape`, botón foto con hover zoom. `StoryViewer.astro` eliminado con `git rm`)
+- [X] Revisar animaciones. (Hecho: `History.astro` incluye animaciones — órbita girando (pausa al hover), fade del panel de info y transiciones de la foto)
 - [X] Verificar la carga correcta de todas las imágenes. (Hecho: `History.astro` usa `loading="lazy"` y `decoding="async"` para las imágenes)
 
 ---
@@ -63,8 +63,8 @@
 ## ♿ Accesibilidad
 - [X] Agregar `alt` a todas las imágenes. (Parcialmente hecho: `History.astro`, `Partners.astro`, `Events.astro`, `TeamCard.astro`, `Navbar.astro` usan atributos `alt`)
 - [ ] Revisar contraste de colores. (Pendiente: Requiere herramientas de auditoría)
-- [X] Verificar navegación mediante teclado. (Hecho: `StoryViewer.astro` tiene navegación por teclado (←/→/Esc). Las tarjetas del equipo son focusables (`tabindex="0"`) y responden a Enter/Espacio vía `initTeamCards()` en `src/scripts/global.ts:57-70`, que sincroniza `aria-expanded`)
-- [X] Revisar atributos ARIA. (Hecho: `Events.astro` usa `role="tablist"`/`role="tab"`, `Navbar.astro` usa `aria-expanded` + `aria-label`, `StoryViewer.astro` usa `aria-label`. ✅ Botones orbitales de `OrbitalItem.astro` ahora tienen `aria-pressed` (estado activo) + `aria-label` descriptivo, sincronizados en el click handler de `History.astro`)
+- [X] Verificar navegación mediante teclado. (Hecho: Botones orbitales nativos (Tab + Enter/Espacio vía `History.astro`), lightbox se cierra con `Escape`, las tarjetas del equipo son focusables (`tabindex="0"`) y responden a Enter/Espacio vía `initTeamCards()` en `src/scripts/global.ts:57-70`, que sincroniza `aria-expanded`)
+- [X] Revisar atributos ARIA. (Hecho: `Events.astro` usa `role="tablist"`/`role="tab"`, `Navbar.astro` usa `aria-expanded` + `aria-label`, botón foto de historia con `aria-label="Ver foto en grande"`, botón cerrar del lightbox con `aria-label="Cerrar"`. ✅ Botones orbitales de `OrbitalItem.astro` tienen `aria-pressed` (estado activo) + `aria-label` descriptivo, sincronizados en el click handler de `History.astro`)
 - [X] Fix tarjetas de equipo en móvil. (Hecho: `initTeamCards()` habilitado en `src/scripts/global.ts` — click-toggle solo en pantallas táctiles (`hover: none`/`pointer: coarse`) + cierre al tocar afuera, y teclado Enter/Espacio siempre. Sincroniza `aria-expanded` en `TeamCard.astro`)
 
 ---

@@ -1,442 +1,288 @@
 ---
 import OrbitalItem from './OrbitalItem.astro';
-import StoryViewer from './StoryViewer.astro';
-
-const orbitalData = {
-  "2017": {
-    title: "Primeros encuentros",
-    text: "Nace la comunidad con meetups informales sobre blockchain.",
-    media: [
-      {type:'img', src:'img/year/2024_1.webp'}, 
-      {type:'img', src:'img/year/2024_1.webp'}, 
-      {type:'img', src:'img/year/2024_1.webp'}, 
-      {type:'img', src:'img/year/2024_1.webp'}]},
-  "2018": {
-    title: "Primeros talleres",
-    text: "Charlas introductorias a Bitcoin y Ethereum en espacios universitarios.",
-    media: [
-      {type:'img', src:'img/year/2024_1.webp'}, 
-      {type:'img', src:'img/year/2024_1.webp'}, 
-      {type:'img', src:'img/year/2024_1.webp'}, 
-      {type:'img', src:'img/year/2024_1.webp'}]},
-  "2019": {
-    title: "Alianzas locales",
-    text: "Primeras colaboraciones con espacios de coworking y hubs tech.",
-    media: [
-      {type:'img', src:'img/year/2024_1.webp'}, 
-      {type:'img', src:'img/year/2024_1.webp'}, 
-      {type:'img', src:'img/year/2024_1.webp'}, 
-      {type:'img', src:'img/year/2024_1.webp'}]},
-  "2020": {
-    title: "Eventos virtuales",
-    text: "La comunidad migra a formatos online, sumando alcance nacional.",
-    media: [
-      {type:'img', src:'img/year/2024_1.webp'}, 
-      {type:'img', src:'img/year/2024_1.webp'}, 
-      {type:'img', src:'img/year/2024_1.webp'}, 
-      {type:'img', src:'img/year/2024_1.webp'}]},
-  "2021": {
-    title: "Boom Web3",
-    text: "Crecimiento acelerado de miembros y primeras meetups masivas presenciales.",
-    media: [
-      {type:'img', src:'img/year/2024_1.webp'}, 
-      {type:'img', src:'img/year/2024_1.webp'}, 
-      {type:'img', src:'img/year/2024_1.webp'}, 
-      {type:'img', src:'img/year/2024_1.webp'}]},
-  "2022": {
-    title: "Educación formal",
-    text: "Primeros cursos y programas educativos junto a universidades.",
-    media: [
-      {type:'img', src:'img/year/2024_1.webp'}, 
-      {type:'img', src:'img/year/2024_1.webp'}, 
-      {type:'img', src:'img/year/2024_1.webp'}, 
-      {type:'img', src:'img/year/2024_1.webp'}]},
-  "2023": {
-    title: "Red de voluntariado",
-    text: "Se conforma la red de voluntariado tecnológico de la comunidad.",
-    media: [
-      {type:'img', src:'img/year/2024_1.webp'}, 
-      {type:'img', src:'img/year/2024_1.webp'}, 
-      {type:'img', src:'img/year/2024_1.webp'}, 
-      {type:'img', src:'img/year/2024_1.webp'}]  },
-  "2024": {
-    title: "Eventos insignia",
-    text: "Consolidación de eventos propios de referencia en la región.",
-    media: [
-      {type:'img', src:'img/year/2024_1.webp'}, 
-      {type:'img', src:'img/year/2024_2.webp'}, 
-      {type:'img', src:'img/year/2024_3.webp'},]
+// Datos de la historia — 1 foto + 3 hitos por año (portado de prototipo-historia).
+// `photo`: 1 foto por año. Para 2017-2023 hoy son placeholders (2024_1.webp).
+// `hitos`: 3 hitos de texto por año.
+const HISTORIA = [
+  {
+    key: '2017',
+    label: '2017',
+    title: 'Primeros encuentros',
+    text: 'Nace la comunidad con meetups informales sobre blockchain.',
+    photo: 'img/year/2024_1.webp',
+    hitos: [
+      'Primeros meetups informales sobre blockchain',
+      'Se forma el grupo inicial de entusiastas',
+      'Nace la idea de una comunidad web3 en La Plata',
+    ],
   },
-  "2025": {
-    title: "Expansión institucional",
-    text: "Nuevas alianzas con organizaciones, sponsors y protocolos.",
-    media: [
-      {type:'img', src:'img/year/2025_1.webp'}, 
-      {type:'img', src:'img/year/2025_2.webp'}, 
-      {type:'img', src:'img/year/2025_3.webp'}, 
-      {type:'img', src:'img/year/2025_4.webp'}]},
-  "actualidad": {
-    title: "Hacia el futuro",
-    text: "Seguimos creciendo como referencia Web3 de La Plata.",
-    media: [
-      {type:'img', src:'img/year/2026_1.webp'}, 
-      {type:'img', src:'img/year/2026_2.webp'}, 
-      {type:'img', src:'img/year/2026_3.webp'}, 
-      {type:'img', src:'img/year/2026_4.webp'}]}
-};
-const years = Object.keys(orbitalData);
+  {
+    key: '2018',
+    label: '2018',
+    title: 'Primeros talleres',
+    text: 'Charlas introductorias a Bitcoin y Ethereum en espacios universitarios.',
+    photo: 'img/year/2024_1.webp',
+    hitos: [
+      'Talleres introductorios de Bitcoin y Ethereum',
+      'Charlas en espacios universitarios de La Plata',
+      'Primeros asistentes recurrentes y referentes locales',
+    ],
+  },
+  {
+    key: '2019',
+    label: '2019',
+    title: 'Alianzas locales',
+    text: 'Primeras colaboraciones con espacios de coworking y hubs tech.',
+    photo: 'img/year/2024_1.webp',
+    hitos: [
+      'Colaboración con espacios de coworking',
+      'Alianzas con hubs tech locales',
+      'La comunidad crece más allá del grupo inicial',
+    ],
+  },
+  {
+    key: '2020',
+    label: '2020',
+    title: 'Eventos virtuales',
+    text: 'La comunidad migra a formatos online, sumando alcance nacional.',
+    photo: 'img/year/2024_1.webp',
+    hitos: [
+      'Adaptación a eventos 100% virtuales',
+      'Nuevo alcance nacional en cada encuentro',
+      'Charlas y contenido online para toda la comunidad',
+    ],
+  },
+  {
+    key: '2021',
+    label: '2021',
+    title: 'Boom Web3',
+    text: 'Crecimiento acelerado de miembros y primeras meetups masivas presenciales.',
+    photo: 'img/year/2024_1.webp',
+    hitos: [
+      'Crecimiento acelerado de miembros',
+      'Primeras meetups presenciales masivas',
+      'La comunidad se consolida como referente local',
+    ],
+  },
+  {
+    key: '2022',
+    label: '2022',
+    title: 'Educación formal',
+    text: 'Primeros cursos y programas educativos junto a universidades.',
+    photo: 'img/year/2024_1.webp',
+    hitos: [
+      'Primeros cursos de blockchain',
+      'Programas educativos junto a universidades',
+      'Puente entre la academia y el ecosistema web3',
+    ],
+  },
+  {
+    key: '2023',
+    label: '2023',
+    title: 'Red de voluntariado',
+    text: 'Se conforma la red de voluntariado tecnológico de la comunidad.',
+    photo: 'img/year/2024_1.webp',
+    hitos: [
+      'Se conforma la red de voluntariado',
+      'Voluntarios tecnológicos para eventos y contenidos',
+      'Base organizativa que sostiene a la comunidad',
+    ],
+  },
+  {
+    key: '2024',
+    label: '2024',
+    title: 'Eventos insignia',
+    text: 'Consolidación de eventos propios de referencia en la región.',
+    photo: 'img/year/2024_1.webp',
+    hitos: [
+      'View Parties oficiales (Polkadot Decoded)',
+      'Eventos propios de referencia regional',
+      'Side events internacionales (ETH Uruguay)',
+    ],
+  },
+  {
+    key: '2025',
+    label: '2025',
+    title: 'Expansión institucional',
+    text: 'Nuevas alianzas con organizaciones, sponsors y protocolos.',
+    photo: 'img/year/2025_1.webp',
+    hitos: [
+      'Meetups camino a Devconnect Argentina',
+      'Hackathon junto a Crecimiento',
+      'Primeras ediciones de Build Buddies con Meta Pool',
+    ],
+  },
+  {
+    key: 'actualidad',
+    label: 'Hoy',
+    title: 'Hacia el futuro',
+    text: 'Seguimos creciendo como referencia Web3 de La Plata.',
+    photo: 'img/year/2026_1.webp',
+    hitos: [
+      'Hackathones con Avalanche y Aleph',
+      'Build Buddies Caffeine Sessions',
+      'Nueva landing 2026 y foco total en comunidad',
+    ],
+  },
+];
+const years = HISTORIA.map((entry) => entry.key);
 ---
-
 <section class="historia" id="historia">
   <div class="section-head reveal">
     <h2>Nuestra Historia</h2>
     <p>Desde 2017 construyendo comunidad, eventos y conocimiento Web3 en La Plata.</p>
   </div>
-
   <div class="orbital-wrap reveal">
     <div class="orbital-container" id="orbital">
-      <img src="/img/icon/CLP-premium.webp" class="orbital-logo" width="180" height="180" alt="CLP" decoding="async" loading="lazy">      
+      <img src="/img/icon/CLP-premium.webp" class="orbital-logo" width="180" height="180" alt="CLP" decoding="async" loading="lazy">
       <div class="orbital-ring">
         {years.map((year, index) => {
           const angle = (index * (360 / years.length)) + 198;
           return (
-            <OrbitalItem 
-              year={year} 
-              angle={angle} 
-              active={year === '2017'} 
+            <OrbitalItem
+              year={year}
+              angle={angle}
+              active={year === '2017'}
             />
           )
         })}
       </div>
     </div>
-
     <div class="orbital-info" id="orbitalInfo">
       <span class="info-year" id="infoYear">2017</span>
       <h3 id="infoTitle">Primeros encuentros</h3>
-      <p id="infoText">Nace la comunidad con meetups informales sobre blockchain.</p>
-      <div class="info-media" id="infoMedia">
-        <!-- Las imágenes aquí se renderizarán dinámicamente -->
+      <p class="info-text" id="infoText">Nace la comunidad con meetups informales sobre blockchain.</p>
+      <div class="info-body">
+        <button class="info-photo" id="infoPhoto" aria-label="Ver foto en grande">
+          <img id="infoPhotoImg" src="img/year/2024_1.webp" alt="" />
+          <span class="info-photo-zoom">＋</span>
+        </button>
+        <div class="info-hitos">
+          <h4 class="info-hitos-title">Hitos del año</h4>
+          <ul class="hitos-list" id="hitosList"></ul>
+        </div>
       </div>
     </div>
   </div>
-
-  <!-- Componente StoryViewer (Modal oculto) -->
-  <StoryViewer />
+  <div class="lightbox" id="lightbox" hidden>
+    <div class="lightbox-backdrop" data-close></div>
+    <div class="lightbox-content">
+      <button class="lightbox-close" data-close aria-label="Cerrar">✕</button>
+      <img id="lightboxImg" src="" alt="" />
+    </div>
+  </div>
 </section>
+<script define:vars={{ HISTORIA }}>
+  // ============ REGISTRO DE RESPALDO PARA @property ============
+  // El @property vive en src/styles/orbital-properties.css. Este bloque
+  // es un fallback: si por algún motivo el CSS no llegó a registrar
+  // --spin/--angle (build, orden de carga, cache de HMR), lo hacemos
+  // acá vía JS puro, que es inmune a minificadores de CSS.
+  // El try/catch absorbe el caso normal (ya registrada por el CSS).
+  if (typeof CSS !== 'undefined' && CSS.registerProperty) {
+    try {
+      CSS.registerProperty({ name: '--spin', syntax: '<angle>', inherits: true, initialValue: '0deg' });
+    } catch (e) {}
+    try {
+      CSS.registerProperty({ name: '--angle', syntax: '<angle>', inherits: true, initialValue: '0deg' });
+    } catch (e) {}
+  }
 
-<script define:vars={{ orbitalData }}>
   const orbitalInfo = document.getElementById('orbitalInfo');
   const infoYear = document.getElementById('infoYear');
   const infoTitle = document.getElementById('infoTitle');
   const infoText = document.getElementById('infoText');
-  const infoMedia = document.getElementById('infoMedia');
+  const infoPhotoBtn = document.getElementById('infoPhoto');
+  const infoPhotoImg = document.getElementById('infoPhotoImg');
+  const hitosList = document.getElementById('hitosList');
   const items = document.querySelectorAll('.orbital-item');
-
-  function renderMedia(mediaArr, title) {
-    if (!infoMedia) return;
-    infoMedia.innerHTML = '';
-    if (!mediaArr.length) return;
-
-    const thumbsWrap = document.createElement('div');
-    thumbsWrap.className = 'story-thumbs';
-
-    mediaArr.forEach((m, i) => {
-      const thumb = document.createElement('button');
-      thumb.className = 'story-thumb';
-      thumb.setAttribute('aria-label', `Ver foto ${i + 1}`);
-
-      if (m.type === 'img') {
-        const img = document.createElement('img');
-        img.src = m.src;
-        img.alt = '';
-        thumb.appendChild(img);
-      } else {
-        thumb.innerHTML = `<span class="thumb-video-icon">▶</span>`;
-      }
-
-      const ring = document.createElement('div');
-      ring.className = 'story-thumb-ring';
-      thumb.appendChild(ring);
-      
-      thumb.addEventListener('click', () => openStory(mediaArr, title));
-      thumbsWrap.appendChild(thumb);
-    });
-
-    const VISIBLE = 5;
-    const hidden = mediaArr.length - VISIBLE;
-    if (hidden > 0) {
-      const extra = document.createElement('button');
-      extra.className = 'story-thumb story-thumb-more';
-      extra.textContent = `+${hidden}`;
-      extra.addEventListener('click', () => openStory(mediaArr, title));
-      Array.from(thumbsWrap.children).forEach((el, i) => {
-        if (i >= VISIBLE) el.style.display = 'none';
-      });
-      thumbsWrap.appendChild(extra);
-    }
-
-    infoMedia.appendChild(thumbsWrap);
-  }
-
-  function openStory(mediaArr, title) {
-    if (!mediaArr || mediaArr.length === 0) return;
-    const event = new CustomEvent('open-stories', {
-      detail: {
-        stories: mediaArr,
-        startIndex: 0,
-        title: title
-      }
-    });
-    window.dispatchEvent(event);
-  }
-
-  function updateInfoPanel(year) {
-    const data = orbitalData[year];
-    
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  // ============ RENDER DEL PANEL (1 foto + 3 hitos) ============
+  function renderYear(key) {
+    const entry = HISTORIA.find((e) => e.key === key);
+    if (!entry || !orbitalInfo || !infoYear || !infoTitle || !infoText || !infoPhotoImg || !hitosList) return;
     orbitalInfo.classList.remove('fade');
     void orbitalInfo.offsetWidth; // trigger reflow
     orbitalInfo.classList.add('fade');
-
-    infoYear.textContent = year === 'actualidad' ? 'Hoy' : year;
-    infoTitle.textContent = data.title;
-    infoText.textContent = data.text;
-    
-    renderMedia(data.media, data.title);
+    infoYear.textContent = entry.label;
+    infoTitle.textContent = entry.title;
+    infoText.textContent = entry.text;
+    infoPhotoImg.src = entry.photo;
+    infoPhotoImg.alt = `Foto de ${entry.title} (${entry.label})`;
+    hitosList.innerHTML = '';
+    entry.hitos.forEach((hito, i) => {
+      const li = document.createElement('li');
+      const num = document.createElement('span');
+      num.className = 'hito-num';
+      num.textContent = String(i + 1);
+      li.appendChild(num);
+      li.appendChild(document.createTextNode(hito));
+      hitosList.appendChild(li);
+    });
   }
-
-  items.forEach(item => {
+  // ============ INTERACCION ORBITA ============
+  items.forEach((item) => {
     item.addEventListener('click', () => {
       const year = item.getAttribute('data-year');
-      items.forEach(i => {
+      items.forEach((i) => {
         i.classList.remove('active');
         i.setAttribute('aria-pressed', 'false');
       });
       item.classList.add('active');
       item.setAttribute('aria-pressed', 'true');
-      updateInfoPanel(year);
+      if (year) renderYear(year);
     });
   });
-
+  // ============ LIGHTBOX (foto en grande) ============
+  function openLightbox() {
+    if (!lightbox || !lightboxImg || !infoPhotoImg) return;
+    lightboxImg.src = infoPhotoImg.src;
+    lightboxImg.alt = infoPhotoImg.alt;
+    lightbox.hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    if (!lightbox) return;
+    lightbox.hidden = true;
+    document.body.style.overflow = '';
+  }
+  infoPhotoBtn?.addEventListener('click', openLightbox);
+  lightbox?.addEventListener('click', (e) => {
+    if (e.target.hasAttribute('data-close')) closeLightbox();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightbox && !lightbox.hidden) closeLightbox();
+  });
   // Inicializar el primer año
-  updateInfoPanel("2017");
+  renderYear('2017');
 </script>
-
 <style is:global>
-  .orbital-container {
-    --size: clamp(380px, 45vw, 560px);
-    --radius: calc(var(--size) / 2 - 50px);
-    --orbit-duration: 90s;
-  }
-/* Story Thumbs */
-  .story-thumbs {
+  .hitos-list li {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 16px;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    line-height: 1.45;
   }
-
-  .story-thumb {
-    position: relative;
-    width: 72px;
-    height: 72px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: none;
-    padding: 3px;
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    cursor: pointer;
+  .hito-num {
     flex-shrink: 0;
-    transition: transform 0.2s ease;
-  }
-
-  .story-thumb:hover {
-    transform: scale(1.08);
-  }
-
-  .story-thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
-    border: 2px solid var(--bg);
-    display: block;
-  }
-
-  .story-thumb-ring {
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    border: 2px solid transparent;
-    pointer-events: none;
-  }
-
-  .story-thumb-more {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border) !important;
-    color: var(--white);
-    font-family: var(--font-title);
-    font-size: 0.85rem;
-    font-weight: 700;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-family: var(--font-title);
+    font-size: 0.7rem;
+    font-weight: 700;
+    background: var(--gradient);
+    color: #050505;
   }
-
-  .story-thumb-more:hover {
-    border-color: var(--primary);
-    color: var(--primary);
-  }
-
-  .thumb-video-icon {
-    color: var(--primary);
-    font-size: 1.2rem;
-  }
-
-  .orbital-info.fade {
-    animation: fadeInfo 0.3s ease;
-  }
-
-  @keyframes fadeInfo {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @media (max-width: 900px) {
-    .orbital-wrap {
-      grid-template-columns: 1fr;
-      gap: 60px;
-    }
-  }
-
-
-  /* ============ STORY VIEWER (overlay) ============ */
-#storyOverlay {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.story-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.85);
-  backdrop-filter: blur(12px);
-}
-
-.story-modal {
-  position: relative;
-  width: min(420px, 96vw);
-  aspect-ratio: 9/16;
-  border-radius: 20px;
-  overflow: hidden;
-  background: #111;
-  box-shadow: 0 0 60px rgba(0,0,0,0.6);
-}
-
-/* Barras de progreso */
-.story-bars {
-  position: absolute;
-  top: 14px;
-  left: 12px;
-  right: 12px;
-  display: flex;
-  gap: 4px;
-  z-index: 10;
-}
-.story-bar {
-  flex: 1;
-  height: 3px;
-  border-radius: 99px;
-  background: rgba(255,255,255,0.3);
-  overflow: hidden;
-}
-.story-bar-fill {
-  height: 100%;
-  width: 0%;
-  background: var(--white);
-}
-.story-bar-fill.done {
-  width: 100%;
-}
-.story-bar-fill.active {
-  animation: storyProgress 4s linear forwards;
-}
-@keyframes storyProgress {
-  from { width: 0%; }
-  to   { width: 100%; }
-}
-
-/* Botón cerrar */
-.story-close {
-  position: absolute;
-  top: 36px;
-  right: 14px;
-  z-index: 10;
-  background: rgba(0,0,0,0.35);
-  border: none;
-  color: var(--white);
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  font-size: 0.85rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Imagen/video */
-.story-media {
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-}
-.story-media img,
-.story-media video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* Caption */
-.story-caption {
-  position: absolute;
-  bottom: 24px;
-  left: 0; right: 0;
-  text-align: center;
-  font-family: var(--font-title);
-  font-weight: 700;
-  font-size: 1rem;
-  color: var(--white);
-  text-shadow: 0 2px 12px rgba(0,0,0,0.7);
-  padding: 0 20px;
-  z-index: 10;
-}
-
-/* Botones nav invisibles izq/der */
-.story-nav {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  z-index: 5;
-  pointer-events: none;
-}
-.story-prev, .story-next {
-  flex: 1;
-  background: none;
-  border: none;
-  cursor: pointer;
-  pointer-events: all;
-}
 </style>
-
 <style>
   .historia { padding: 100px 0; position: relative; }
-
   .orbital-wrap {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -444,8 +290,8 @@ const years = Object.keys(orbitalData);
     align-items: center;
     margin: 0 auto;
     padding: 0 32px;
+    max-width: 1280px;
   }
-
   .orbital-container {
     position: relative;
     width: var(--size);
@@ -453,8 +299,18 @@ const years = Object.keys(orbitalData);
     margin: 0 auto;
     border-radius: 50%;
     border: 1px dashed var(--glass-border);
+    --size: clamp(380px, 45vw, 560px);
+    --radius: calc(var(--size) / 2 - 50px);
+    --orbit-duration: 90s;
+    /* Única fuente de verdad del giro: se anima --spin acá, y tanto
+       .orbital-ring como .orbital-year (en OrbitalItem.astro) leen
+       ese mismo valor en cada frame. Ya no hay dos animaciones
+       independientes que deban coincidir por timing. */
+    animation: spin var(--orbit-duration) linear infinite;
   }
-
+  .orbital-container:hover {
+    animation-play-state: paused;
+  }
   .orbital-logo {
     position: absolute;
     top: 50%;
@@ -467,32 +323,27 @@ const years = Object.keys(orbitalData);
     filter: drop-shadow(0 0 24px rgba(4,255,183,0.25));
     z-index: 2;
   }
-
   .orbital-ring {
     position: absolute;
     inset: 0;
-    animation: orbitSpin var(--orbit-duration) linear infinite;
+    transform: rotate(var(--spin));
   }
-
-  .orbital-container:hover .orbital-ring,
-  .orbital-container:hover .orbital-item .orbital-year {
-    animation-play-state: paused;
+  @keyframes spin {
+    to { --spin: 360deg; }
   }
-
-  @keyframes orbitSpin {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
-  }
-
   .orbital-info {
     padding: 32px;
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
     border-radius: var(--radius-lg);
     backdrop-filter: blur(8px);
-    min-height: 280px;
+    min-height: 320px;
   }
-
+  .orbital-info.fade { animation: fadeInfo 0.3s ease; }
+  @keyframes fadeInfo {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
   .info-year {
     display: inline-block;
     font-family: var(--font-title);
@@ -504,16 +355,121 @@ const years = Object.keys(orbitalData);
     background-clip: text;
     color: transparent;
   }
-
-  .orbital-info h3 { font-size: 1.2rem; margin-bottom: 12px; }
-  .orbital-info p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; }
-
-  .info-media {
-    margin-top: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
+  .orbital-info h3 { font-size: 1.2rem; margin-bottom: 10px; }
+  .info-text { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 24px; }
+  /* ============ PANEL: FOTO + HITOS ============ */
+  .info-body {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 24px;
+    align-items: start;
   }
-
- 
+  .info-photo {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+    background: linear-gradient(135deg, rgba(4,255,183,0.12), rgba(213,63,233,0.12));
+    padding: 0;
+    cursor: zoom-in;
+  }
+  .info-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+  .info-photo:hover img { transform: scale(1.05); }
+  .info-photo-zoom {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    color: var(--white);
+    background: rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+  .info-photo:hover .info-photo-zoom,
+  .info-photo:focus-visible .info-photo-zoom { opacity: 1; }
+  .info-hitos-title {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+  .hitos-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+  }
+  /* ============ LIGHTBOX ============ */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .lightbox[hidden] { display: none; }
+  .lightbox-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(12px);
+  }
+  .lightbox-content {
+    position: relative;
+    max-width: min(420px, 94vw);
+    width: 100%;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 0 60px rgba(0, 0, 0, 0.6);
+  }
+  .lightbox-content img {
+    width: 100%;
+    height: auto;
+    max-height: 86vh;
+    object-fit: contain;
+    display: block;
+  }
+  .lightbox-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 2;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.4);
+    color: var(--white);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .lightbox-close:hover { background: rgba(0, 0, 0, 0.65); }
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 900px) {
+    .orbital-wrap { grid-template-columns: 1fr; gap: 60px; }
+  }
+  @media (max-width: 640px) {
+    .info-body { grid-template-columns: 1fr; }
+    .info-photo { max-width: 240px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .orbital-container { animation: none; }
+  }
 </style>
