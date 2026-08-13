@@ -3,7 +3,7 @@
 ## 📂 Contenido
 - [ ] Agregar todas las imágenes faltantes. (Pendiente: Imágenes de historia para 2017-2023 y fotos individuales del Core Team)
 - [ ] Agregar las imágenes pendientes de la sección Historia. (Parcialmente hecho: 2024-2026 tienen imágenes, 2017-2023 usan placeholder)
-- [ ] Agregar las fotos faltantes del Core Team. (Pendiente: Todos usan la misma imagen `lego_manu.webp`)
+- [ ] Agregar las fotos faltantes del Core Team. (Pendiente: Falta Lean)
 - [X] Agregar los logos faltantes de Partners. (Hecho: Los logos de partners están cargados en `Partners.astro`)
 - [ ] Revisar y actualizar todo el contenido textual. (Pendiente: Requiere revisión manual exhaustiva)
 
@@ -30,7 +30,7 @@
 
 ## 🔗 Enlaces
 - [X] Agregar enlaces a las redes sociales de CLP. (Hecho: URLs reales en `Footer.astro` y `Contact.astro` para Telegram, X, LinkedIn e Instagram)
-- [ ] Agregar los enlaces del Core Team (2 por integrante). (Parcialmente hecho: Solo Manuel Pisoni tiene enlaces reales en `Team.astro`; los otros 5 miembros usan `href="#"`)
+- [ ] Agregar los enlaces del Core Team (2 por integrante). (Parcialmente hecho: falta Lean)
 - [ ] Reemplazar los enlaces muertos `href="#"`. (Pendiente: Logo del navbar en `Navbar.astro`, CTA "Reservar Lugar" en `NextEvent.astro` y redes del Core Team)
 - [ ] Verificar que todos los enlaces funcionen correctamente. (Pendiente: Requiere pruebas manuales)
 - [ ] Abrir enlaces externos en una nueva pestaña. (Parcialmente hecho: `Events.astro` usa `target="_blank"` para Luma, pero `TeamCard.astro` no lo usa para enlaces sociales)
