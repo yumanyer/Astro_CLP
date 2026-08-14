@@ -181,6 +181,12 @@ const isConfirmed = new Date(eventData.targetDate).getTime() > Date.now();
     }
   }
 
+  @media (max-width: 640px) {
+    .proximo { padding: 60px 20px 80px; }
+    .proximo-card { padding: 24px 20px; gap: 28px; }
+    .proximo-card.sin-fecha { grid-template-columns: 1fr; }
+  }
+
 </style>
 
 <script>

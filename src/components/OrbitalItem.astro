@@ -36,6 +36,7 @@ const { year, angle, active = false } = Astro.props;
     cursor: pointer;
     transition: border-color 0.25s ease, color 0.25s ease, background 0.25s ease, transform 0.25s ease;
     transform: rotate(var(--angle)) translate(var(--radius));
+    
   }
 
   .orbital-item:hover {
@@ -65,6 +66,15 @@ const { year, angle, active = false } = Astro.props;
       height: 52px;
       margin: -26px;
       font-size: 0.75rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .orbital-item {
+      width: 44px;
+      height: 44px;
+      margin: -22px;
+      font-size: 0.68rem;
     }
   }
 </style>
