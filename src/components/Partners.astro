@@ -15,6 +15,13 @@ const partners = [
   { name: 'Team1', img: 'Team1_Text_Main.webp' },
   { name: 'Uniswap', img: 'Uniswap_icon_pink.webp' },
 ];
+
+// Duplicado una sola vez, en una única fuente de verdad.
+// Restricción de simetría: si en el futuro se filtra `partners` por breakpoint,
+// filtrar ESTE array antes de duplicarlo — nunca mapear cada mitad por separado.
+// Si eso rompe la paridad de ambas mitades, el -50% del CSS deja de ser exacto;
+// en ese caso migrar a un marquee JS con una sola copia + duplicación en el seam.
+const displayPartners = [...partners, ...partners];
 ---
 
 <section class="apoyan" id="apoyan">
@@ -26,7 +33,7 @@ const partners = [
 
     <div class="marquee reveal">
       <div class="marquee-track">
-        {partners.map((partner) => (
+        {displayPartners.map((partner) => (
           <span class="logo-pill">
             <img 
               src={`img/partners/${partner.img}`} 
@@ -36,24 +43,16 @@ const partners = [
             />
           </span>
         ))}
-        {/* Duplicamos la lista para que el efecto de scroll infinito sea fluido */}
-        {partners.map((partner) => (
-          <span class="logo-pill">
-            <img 
-              src={`img/partners/${partner.img}`} 
-              alt={partner.name} 
-              style="width: 100px;" 
-              loading="lazy"
-            />
-          </span>
-        ))}
       </div>
     </div>
   </div>
 </section>
 
 <style>
-.apoyan { padding: 60px 0 100px; }
+.apoyan {
+  padding: 60px 0 100px;
+  --gap: 24px;
+}
 
 .apoyan-block { margin-bottom: 50px; }
 .apoyan-block:last-child { margin-bottom: 0; }
@@ -80,25 +79,21 @@ const partners = [
   margin-bottom: 0;
   mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
 }
+
 .marquee-track {
   display: flex;
-  gap: 24px;
   width: max-content;
   align-items: center;
-  animation: scrollLeft 30s linear infinite;
-}
- .marquee-track {
   animation: scrollRight 35s linear infinite;
 }
-@keyframes scrollLeft {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
+
 @keyframes scrollRight {
   from { transform: translateX(-50%); }
   to { transform: translateX(0); }
 }
+
 .logo-pill {
+  margin-right: var(--gap);
   padding: 16px 32px;
   border-radius: 12px;
   background: transparent;
@@ -107,6 +102,4 @@ const partners = [
   white-space: nowrap;
   transition: color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
-
-
 </style>
