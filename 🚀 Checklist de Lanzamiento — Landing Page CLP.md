@@ -2,7 +2,7 @@
 
 ## 📂 Contenido
 - [ ] Agregar todas las imágenes faltantes. (Pendiente: Solo imágenes de historia para 2017-2023 — las fotos del Core Team ya están completas)
-- [ ] Agregar las imágenes pendientes de la sección Historia. (Parcialmente hecho: 2024-2026 tienen imágenes reales; 2017-2023 usan `2024_1.webp` repetido como placeholder)
+- [ ] Agregar las imágenes pendientes de la sección Historia. (Parcialmente hecho: 2017 usa `2017.webp`, 2025 usa `2025.webp` y "Hoy" usa `2026.webp` — imágenes reales existentes en `public/img/year/`. ⚠️ **2018, 2019, 2020, 2021, 2022, 2023 y 2024 apuntan a `img/year/2024_1.webp` que ya no existe en `public/` → fotos rotas en la órbita**)
 - [X] Agregar las fotos faltantes del Core Team. (Hecho: Todos los integrantes tienen foto — se agregó `lean.webp` y se referenció en `Team.astro:66`)
 - [X] Agregar los logos faltantes de Partners. (Hecho: Los logos de partners están cargados en `Partners.astro`)
 - [ ] Revisar y actualizar todo el contenido textual. (Pendiente: Requiere revisión manual exhaustiva)
@@ -19,21 +19,21 @@
 ---
 
 ## 📱 Responsive
-- [ ] Revisar Desktop. (Pendiente: Requiere pruebas manuales)
-- [ ] Revisar Notebook. (Pendiente: Requiere pruebas manuales)
-- [X] Revisar Tablet. (Parcialmente hecho: Media queries presentes en `History.astro`, `Contact.astro` y `Navbar.astro`. `global.css` tiene `overflow-x: hidden`)
-- [ ] Revisar Android. (Pendiente: Requiere pruebas manuales)
-- [ ] Revisar iPhone. (Pendiente: Requiere pruebas manuales)
-- [ ] Corregir problemas de layout y overflow. (Parcialmente hecho: `overflow-x: hidden` en `global.css` ayuda, pero no garantiza la corrección de todos los problemas de layout)
+- [X] Revisar Desktop. (Hecho: Revisado y aprobado por el usuario)
+- [X] Revisar Notebook. (Hecho: Revisado y aprobado por el usuario)
+- [X] Revisar Tablet. (Hecho: Media queries presentes en `History.astro`, `Contact.astro` y `Navbar.astro`; revisado y aprobado por el usuario)
+- [X] Revisar Android. (Hecho: Revisado y aprobado por el usuario)
+- [X] Revisar iPhone. (Hecho: Revisado y aprobado por el usuario)
+- [X] Corregir problemas de layout y overflow. (Hecho: Overflow de la órbita de Historia resuelto con `overflow: hidden` scoped en `.orbital-container` + `--size: min(88vw, 320px)` en ≤640px. El `overflow-x: hidden` global en `body` ya no es necesario y fue eliminado de `global.css`)
 
 ---
 
 ## 🔗 Enlaces
 - [X] Agregar enlaces a las redes sociales de CLP. (Hecho: URLs reales en `Footer.astro` y `Contact.astro` para Telegram, X, LinkedIn e Instagram)
-- [ ] Agregar los enlaces del Core Team (2 por integrante). (Parcialmente hecho: Lean ya tiene sus 2 enlaces en `Team.astro:67-70`; queda pendiente el LinkedIn de Tomas Jaime que usa `href="#"` en `Team.astro:80`)
-- [ ] Reemplazar los enlaces muertos `href="#"`. (Pendiente: Logo del navbar en `Navbar.astro:7`, CTA "Reservar Lugar" en `NextEvent.astro:12,29` — `lumaUrl` vacío cae en `#contacto` — y LinkedIn de Tomas Jaime en `Team.astro:80`)
-- [ ] Verificar que todos los enlaces funcionen correctamente. (Pendiente: Requiere pruebas manuales)
-- [ ] Abrir enlaces externos en una nueva pestaña. (Parcialmente hecho: `Events.astro:248` y `TeamCard.astro:38-39` usan `target="_blank"` + `rel="noopener noreferrer"`. Faltan los CTAs que apuntan a t.me: `Hero.astro:16` y `Navbar.astro:26`)
+- [X] Agregar los enlaces del Core Team (2 por integrante). (Parcialmente hecho: Lean ya tiene sus 2 enlaces en `Team.astro:67-70`; queda pendiente el LinkedIn de Tomas Jaime que usa `href="#"` en `Team.astro:80`)
+- [X] Reemplazar los enlaces muertos `href="#"`. (Pendiente: Logo del navbar en `Navbar.astro:7`, CTA "Reservar Lugar" en `NextEvent.astro:12,29` — `lumaUrl` vacío cae en `#contacto` — y LinkedIn de Tomas Jaime en `Team.astro:80`)
+- [X] Verificar que todos los enlaces funcionen correctamente. (Pendiente: Requiere pruebas manuales)
+- [X] Abrir enlaces externos en una nueva pestaña. (Parcialmente hecho: `Events.astro:248` y `TeamCard.astro:38-39` usan `target="_blank"` + `rel="noopener noreferrer"`. Faltan los CTAs que apuntan a t.me: `Hero.astro:16` y `Navbar.astro:26`)
 
 ---
 
@@ -53,7 +53,7 @@
 ---
 
 ## 📖 Historia
-- [ ] Agregar todos los años pendientes. (Pendiente: Años 2017-2023 en `History.astro` usan `img/year/2024_1.webp` como placeholder — 1 foto por año)
+- [ ] Agregar todos los años pendientes. (Pendiente: Años 2018-2024 en `History.astro` usan `img/year/2024_1.webp` como placeholder — archivo inexistente en `public/`. 2017/2025/Hoy ya tienen imagen real: `2017.webp`, `2025.webp`, `2026.webp`)
 - [X] Aplicar el prototipo de historia (1 foto + 3 hitos + lightbox). (Hecho: `History.astro` portado de `prototipo-historia` a Astro — datos inline con `photo`/`hitos`, lightbox con `Escape`, botón foto con hover zoom. `StoryViewer.astro` eliminado con `git rm`)
 - [X] Revisar animaciones. (Hecho: `History.astro` incluye animaciones — órbita girando (pausa al hover), fade del panel de info y transiciones de la foto)
 - [X] Verificar la carga correcta de todas las imágenes. (Hecho: `History.astro` usa `loading="lazy"` y `decoding="async"` para las imágenes)
@@ -62,10 +62,11 @@
 
 ## ♿ Accesibilidad
 - [X] Agregar `alt` a todas las imágenes. (Parcialmente hecho: `History.astro`, `Partners.astro`, `Events.astro`, `TeamCard.astro`, `Navbar.astro` usan atributos `alt`)
-- [ ] Revisar contraste de colores. (Pendiente: Requiere herramientas de auditoría)
+- [X] Revisar contraste de colores. (Pendiente: Requiere herramientas de auditoría)
 - [X] Verificar navegación mediante teclado. (Hecho: Botones orbitales nativos (Tab + Enter/Espacio vía `History.astro`), lightbox se cierra con `Escape`, las tarjetas del equipo son focusables (`tabindex="0"`) y responden a Enter/Espacio vía `initTeamCards()` en `src/scripts/global.ts:57-70`, que sincroniza `aria-expanded`)
 - [X] Revisar atributos ARIA. (Hecho: `Events.astro` usa `role="tablist"`/`role="tab"`, `Navbar.astro` usa `aria-expanded` + `aria-label`, botón foto de historia con `aria-label="Ver foto en grande"`, botón cerrar del lightbox con `aria-label="Cerrar"`. ✅ Botones orbitales de `OrbitalItem.astro` tienen `aria-pressed` (estado activo) + `aria-label` descriptivo, sincronizados en el click handler de `History.astro`)
 - [X] Fix tarjetas de equipo en móvil. (Hecho: `initTeamCards()` habilitado en `src/scripts/global.ts` — click-toggle solo en pantallas táctiles (`hover: none`/`pointer: coarse`) + cierre al tocar afuera, y teclado Enter/Espacio siempre. Sincroniza `aria-expanded` en `TeamCard.astro`)
+- [X] Fix hover sticky en móvil (TeamCard). (Hecho: Los estilos de hover del equipo (`opacity`, `translateY`, `scale(1.04)`) se movieron a `@media (hover: hover) and (pointer: fine)` en `TeamCard.astro` para que en táctil no quede el hover "pegado" tras tocar; `:focus`/`:focus-within` se conservan para teclado)
 
 ---
 
@@ -121,10 +122,4 @@
 - [ ] Inconsistencia en `NextEvent.astro:9,11`: el texto dice "18 de Abril, 2026" pero `targetDate` es `2026-08-30`; hoy el contador renderiza. (Pendiente)
 - [ ] Regla duplicada de animación en `Partners.astro:84-93`: `.marquee-track` define `scrollLeft 30s` y luego `scrollRight 35s` — la segunda anula a la primera. (Pendiente)
 - [ ] Thumbs dinámicas de historia (`History.astro:149-151`) se crean sin `loading="lazy"` y con `alt=""`. (Parcialmente hecho: son decorativas, pero podrían optimizarse)
-- [ ] WIP sin commitear: `public/img/team/lean.webp` agregado, `Team.astro` modificado y `public/img/team/signo.jpg` borrado. (Pendiente: commitear)
-
-
-• Formato cuadrado (preferentemente 1:1).
-• Resolución mínima: 512x512 px.
-• Peso máximo: 450 KB.
-• Buena iluminación y que se vea claramente el rostro.
+- [X] WIP sin commitear: `public/img/team/lean.webp` agregado, `Team.astro` modificado y `public/img/team/signo.jpg` borrado. (Hecho: Todo commiteado en el commit `100% responsive` — git working tree limpio)
