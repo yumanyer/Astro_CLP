@@ -302,6 +302,10 @@ const years = HISTORIA.map((entry) => entry.key);
     margin: 0 auto;
     border-radius: 50%;
     border: 1px dashed var(--glass-border);
+    /* Recorta el bbox del ring rotado (un cuadrado que al rotar sobresale
+       del círculo) SIN recortar los items: su borde externo máximo es
+       size/2 - 18px, siempre dentro del círculo de radio size/2. */
+    overflow: hidden;
     --size: clamp(380px, 45vw, 560px);
     --radius: calc(var(--size) / 2 - 50px);
     --orbit-duration: 90s;
@@ -469,8 +473,16 @@ const years = HISTORIA.map((entry) => entry.key);
     .orbital-wrap { grid-template-columns: 1fr; gap: 60px; }
   }
   @media (max-width: 640px) {
+    .orbital-wrap { gap: 48px; padding: 0 16px; }
+    .orbital-container {
+      /* Nunca más ancho que el viewport: 88vw < 100vw con margen de 16px por lado */
+      --size: min(88vw, 320px);
+      --radius: calc(var(--size) / 2 - 38px);
+    }
+    .orbital-logo { width: 62px; height: 62px; }
+    .orbital-info { padding: 24px 20px; min-height: 0; }
     .info-body { grid-template-columns: 1fr; }
-    .info-photo { max-width: 240px; }
+    .info-photo { max-width: 220px; }
   }
   @media (prefers-reduced-motion: reduce) {
     .orbital-container { animation: none; }
