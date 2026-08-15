@@ -153,20 +153,28 @@ const { name, role, description, image, socials } = Astro.props;
      HOVER / FOCUS
   ========================= */
 
-  .team-card:hover .team-overlay,
   .team-card:focus .team-overlay,
   .team-card:focus-within .team-overlay {
     opacity: 1;
   }
 
-  .team-card:hover .team-info,
   .team-card:focus .team-info,
   .team-card:focus-within .team-info {
     transform: translateY(0);
   }
 
-  .team-card:hover .team-image {
-    transform: scale(1.04);
+  @media (hover: hover) and (pointer: fine) {
+    .team-card:hover .team-overlay {
+      opacity: 1;
+    }
+
+    .team-card:hover .team-info {
+      transform: translateY(0);
+    }
+
+    .team-card:hover .team-image {
+      transform: scale(1.04);
+    }
   }
 
   /* =========================
@@ -179,7 +187,6 @@ const { name, role, description, image, socials } = Astro.props;
     }
 
     .team-overlay {
-      opacity: 1;
       padding: 22px;
     }
 
