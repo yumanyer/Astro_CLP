@@ -27,7 +27,7 @@
       </div>
     </div>
 
-    <form class="contacto-form" id="contactForm" novalidate>
+    <form class="contacto-form" id="contactForm" action="https://formspree.io/f/mrpgzpqj" method="POST" accept-charset="UTF-8" novalidate>
       <div class="form-group">
         <label for="nombre">Nombre</label>
         <input type="text" id="nombre" name="nombre" required>
@@ -66,12 +66,14 @@
         <textarea id="mensaje" name="mensaje" rows="4" required></textarea>
         <span class="error-msg" data-for="mensaje"></span>
       </div>
+      <input type="hidden" name="_subject" value="Nuevo contacto desde Cripto La Plata" />
       <div class="form-group hp-field" aria-hidden="true">
         <label for="website">No completar</label>
         <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
       </div>
       <button type="submit" class="btn btn-primary" id="submitBtn">Enviar</button>
-      <p class="form-success" id="formSuccess" hidden>¡Gracias! Te responderemos a la brevedad.</p>
+      <p class="form-feedback form-success" id="formSuccess" role="status" aria-live="polite" hidden>¡Gracias! Tu mensaje fue enviado. Te responderemos a la brevedad.</p>
+      <p class="form-feedback form-error" id="formError" role="alert" aria-live="assertive" hidden>No pudimos enviar el mensaje. Revisá tu conexión e intentá nuevamente.</p>
     </form>
   </div>
 </section>
@@ -155,11 +157,12 @@
   color: #ff5d5d;
   min-height: 14px;
 }
-.form-success {
-  color: var(--primary);
+.form-feedback {
   font-size: 0.9rem;
   text-align: center;
 }
+.form-success { color: var(--primary); }
+.form-error { color: #ff7b7b; }
 
 /* Honeypot: oculto visualmente, accesible solo a bots */
 .hp-field {
@@ -190,6 +193,7 @@
   // ============ FORMULARIO DE CONTACTO ============
   const form = document.getElementById('contactForm') as HTMLFormElement | null;
   const formSuccess = document.getElementById('formSuccess') as HTMLElement | null;
+  const formError = document.getElementById('formError') as HTMLElement | null;
   const submitBtn = document.getElementById('submitBtn') as HTMLButtonElement | null;
 
   if (form) {
@@ -236,7 +240,7 @@
         });
       });
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
       // Honeypot: si el campo oculto tiene valor, es un bot → descartar sin feedback
@@ -249,6 +253,9 @@
       // Evitar doble submit
       if (submitting) return;
       submitting = true;
+      form.setAttribute('aria-busy', 'true');
+      if (formSuccess) formSuccess.hidden = true;
+      if (formError) formError.hidden = true;
       if (submitBtn) {
         submitBtn.disabled = true;
         submitBtn.textContent = 'Enviando…';
@@ -259,20 +266,43 @@
       form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('input, select, textarea')
         .forEach(field => { if (field.name !== 'website' && !validateField(field)) valid = false; });
 
-      if (valid) {
-        if (formSuccess) formSuccess.hidden = false;
-        form.reset();
-        setTimeout(() => {
-          if (formSuccess) formSuccess.hidden = true;
-          submitting = false;
-          if (submitBtn) {
-            submitBtn.disabled = false;
-            submitBtn.textContent = 'Enviar';
-          }
-        }, 4000);
-      } else {
-        if (formSuccess) formSuccess.hidden = true;
+      if (!valid) {
         submitting = false;
+        form.removeAttribute('aria-busy');
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Enviar';
+        }
+        return;
+      }
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' }
+        });
+        const result = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+          const serviceMessage = Array.isArray(result.errors)
+            ? result.errors.map((error: { message?: string }) => error.message).filter(Boolean).join(' ')
+            : '';
+          throw new Error(serviceMessage || 'Formspree no pudo procesar el envío.');
+        }
+
+        form.reset();
+        if (formSuccess) formSuccess.hidden = false;
+      } catch (error) {
+        if (formError) {
+          formError.textContent = error instanceof Error && error.message
+            ? error.message
+            : 'No pudimos enviar el mensaje. Revisá tu conexión e intentá nuevamente.';
+          formError.hidden = false;
+        }
+      } finally {
+        submitting = false;
+        form.removeAttribute('aria-busy');
         if (submitBtn) {
           submitBtn.disabled = false;
           submitBtn.textContent = 'Enviar';
