@@ -1,26 +1,84 @@
 ---
-import '../styles/global.css';
-import Footer from '../components/Footer.astro';
-
+import "../styles/global.css";
+import Footer from "../components/Footer.astro";
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cripto La Plata (CLP)</title>
-    <!-- Aquí podrías agregar tus fuentes de Google Fonts más adelante -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/webp" href="/img/icon/CLP-premium.webp"  />
+    <!-- SEO principal -->
+  <title>Cripto La Plata | Comunidad Web3 de La Plata, Argentina</title>
+    <meta
+      name="description"
+      content="Cripto La Plata (CLP) es una comunidad Web3 con base en La Plata, Argentina, activa desde 2017. Conectamos personas, proyectos y conocimiento alrededor del ecosistema cripto."
+    />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://criptolaplata.com/" />
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:url" content="https://criptolaplata.com/" />
+    <meta
+      property="og:title"
+      content="Cripto La Plata | Comunidad Web3 de La Plata"
+    />
+    <meta
+      property="og:description"
+      content="Comunidad Web3 de La Plata, Argentina. Activa desde 2017."
+    />
+    <meta
+      property="og:image"
+      content="https://criptolaplata.com/img/icon/CLP-premium.webp"
+    />
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Cripto La Plata | Comunidad Web3 de La Plata"
+    />
+    <meta
+      name="twitter:description"
+      content="Comunidad Web3 de La Plata, Argentina. Activa desde 2017."
+    />
+    <meta
+      name="twitter:image"
+      content="https://criptolaplata.com/img/icon/CLP-premium.webp"
+    />
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Favicon -->
+    <link rel="icon" type="image/webp" href="/img/icon/CLP-premium.webp" />
+    <script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Cripto La Plata",
+  "alternateName": "CLP",
+  "url": "https://criptolaplata.com/",
+  "logo": "https://criptolaplata.com/img/icon/CLP-premium.webp",
+  "description": "Comunidad Web3 de La Plata, Argentina, activa desde 2017.",
+  "sameAs": [
+    "https://www.linkedin.com/company/cripto-la-plata/",
+    "https://www.instagram.com/criptolaplata/",
+    "https://t.me/criptolaplata"
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "La Plata",
+    "addressCountry": "AR"
+  }
+})} />
   </head>
   <body>
-    <!-- El slot es donde irá el contenido de nuestras páginas -->
-     <script type="module" >
-      import '../scripts/global.ts';
-     </script>
+    <script type="module">
+      import "../scripts/global.ts";
+    </script>
     <slot />
     <Footer />
   </body>
