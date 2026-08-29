@@ -284,12 +284,13 @@ function initModel() {
   });
 }
 
-// Diferir la inicialización pesada hasta que el hilo principal esté libre
-if ('requestIdleCallback' in window) {
-  requestIdleCallback(initModel, { timeout: 3000 });
-} else {
-  // Fallback para Safari / navegadores sin requestIdleCallback
-  setTimeout(initModel, 0);
-}
-
+// Diferir hasta que la página termine de cargar sus recursos críticos
+// (fonts, CSS, imágenes above-the-fold), y recién ahí competir por ancho de banda
+window.addEventListener('load', () => {
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(initModel, { timeout: 3000 });
+  } else {
+    setTimeout(initModel,  0);
+  }
+});
 </script>
