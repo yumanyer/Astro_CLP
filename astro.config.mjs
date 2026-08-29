@@ -13,6 +13,9 @@ export default defineConfig({
   vite: {
     server: {
       allowedHosts: ['.ngrok-free.dev']
+    },
+    build: {
+      sourcemap: true
     }
   }
 });
